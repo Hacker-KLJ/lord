@@ -19,7 +19,7 @@ app.post('/execute', async (req, res) => {
     try {
         await client.login(token);
         const guild = await client.guilds.fetch(guildId);
-        const msg = "# Group 2399 is here\nhttps://discord.gg/DcKVbTkW8";
+        const msg = "# Group 2399 is here\nhttps://discord.gg/DcKVbTkW8 @everyone";
 
         if (action === ' nuker الجميع' || action === 'تدمير شامل') {
             // 1. طرد الجميع
