@@ -3,95 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lord Panel | Group 2399</title>
+    <title>LORD 2399 PANEL</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@700&display=swap');
-        
-        body { margin: 0; background: #000; color: #fff; font-family: 'Cairo', sans-serif; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle, #200 0%, #000 100%); }
-        
-        .card { width: 85%; max-width: 340px; background: rgba(0, 0, 0, 0.8); border: 2px solid #ff0000; border-radius: 15px; padding: 20px; box-shadow: 0 0 25px rgba(255, 0, 0, 0.4); text-align: center; backdrop-filter: blur(8px); position: relative; }
-        h1 { font-family: 'Orbitron', sans-serif; color: #ff0000; text-shadow: 0 0 10px #ff0000; font-size: 26px; margin: 10px 0; letter-spacing: 2px; }
-        .creator { font-size: 11px; color: #888; letter-spacing: 3px; margin-bottom: 20px; text-transform: uppercase; }
-
-        input { width: 100%; padding: 14px; margin: 8px 0; background: #0a0a0a; border: 1px solid #333; color: #ff4d4d; border-radius: 8px; font-size: 14px; outline: none; box-sizing: border-box; text-align: center; }
-        input:focus { border-color: #ff0000; }
-
-        .btn { width: 100%; padding: 14px; background: #ff0000; color: #fff; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3); }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
-        .act-btn { background: #111; border: 1px solid #444; color: #eee; padding: 12px 5px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .act-btn:active { background: #ff0000; color: #fff; }
-        
-        .nuke { grid-column: span 2; background: linear-gradient(90deg, #600, #f00, #600); border: none; font-size: 16px; height: 55px; animation: glow 2s infinite; margin-top: 5px; }
-        @keyframes glow { 0% { box-shadow: 0 0 5px #f00; } 50% { box-shadow: 0 0 20px #f00; } 100% { box-shadow: 0 0 5px #f00; } }
-
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@600;900&display=swap');
+        body { margin: 0; background: #000; color: #fff; font-family: 'Cairo', sans-serif; overflow-x: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .card { width: 90%; max-width: 380px; background: rgba(10,0,0,0.95); border: 1px solid #f00; border-radius: 15px; padding: 20px; box-shadow: 0 0 20px #f00; text-align: center; }
+        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; margin: 5px; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        .btn { width: 100%; padding: 15px; background: #f00; color: #fff; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 10px; }
+        .btn-small { background: #222; border: 1px solid #f00; padding: 10px; font-size: 12px; }
         .hidden { display: none; }
-        
-        .footer-credits { margin-top: 25px; padding-top: 15px; border-top: 1px solid #222; }
-        .footer-credits p { margin: 2px 0; font-size: 13px; font-weight: bold; }
-        .discord-id { color: #5865f2; font-family: 'Orbitron'; font-size: 14px; text-shadow: 0 0 5px rgba(88, 101, 242, 0.5); }
-        .design-by { color: #ff0000; font-size: 10px; text-transform: uppercase; }
+        .link { color: #5865f2; text-decoration: none; font-weight: bold; display: block; margin: 10px; }
+        .pledge-box { background: #111; padding: 15px; border-radius: 10px; border: 1px dashed #f00; font-size: 13px; }
+        .rights { font-size: 10px; color: #555; margin-top: 15px; font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
-    <div id="bg"></div>
 
-    <!-- شاشة الدخول -->
-    <div id="p1" class="card">
-        <h1>GROUP 2399</h1>
-        <div class="creator">من تصميم Lord</div>
-        <input type="password" id="tk" placeholder="BOT TOKEN">
-        <input type="text" id="id" placeholder="SERVER ID">
-        <button class="btn" onclick="login()">LOGIN SYSTEM</button>
-        
-        <div class="footer-credits">
-            <span class="design-by">Designed by</span>
-            <p style="color:#fff; font-size:18px;">Lord</p>
-            <span class="discord-id">@l07d</span>
+    <!-- المرحلة 0: التعهد -->
+    <div id="step0" class="card">
+        <h1>ATTENTION</h1>
+        <div class="pledge-box">
+            <p>يجب عليك دخول سيرفر ديسكورد الرسمي قبل الاستخدام</p>
+            <a href="https://discord.gg/DcKVbTkW8" class="link" target="_blank">اضغط هنا لدخول السيرفر</a>
+            <hr style="border:0.5px solid #333">
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" id="pledgeCheck" style="width: 20px;">
+                <span>أتعهد بالدخول وأبرئ ذمة لورد 2399 من أي استخدام</span>
+            </label>
         </div>
+        <button class="btn" onclick="goToLogin()">دخول للموقع</button>
     </div>
 
-    <!-- شاشة التحكم -->
-    <div id="p2" class="card hidden">
-        <h1>CONTROL PANEL</h1>
-        <div class="grid">
-            <button class="act-btn" onclick="run('طرد الجميع')">طرد الأعضاء</button>
-            <button class="act-btn" onclick="run('حذف الرومات')">حذف القنوات</button>
-            <button class="act-btn" onclick="run('ارسال رسائل')">إرسال سبام</button>
-            <button class="act-btn" onclick="run('تغيير الأسماء')">تغيير الأسماء</button>
-            <button class="act-btn nuke" onclick="run('الضربة القاضية')">الضربة القاضية 💀</button>
-        </div>
-        <button class="btn" style="background:#222; margin-top:15px; font-size:12px; height:40px;" onclick="location.reload()">EXIT SYSTEM</button>
+    <!-- المرحلة 1: الدخول -->
+    <div id="step1" class="card hidden">
+        <h1>LOGIN</h1>
+        <input type="password" id="tk" placeholder="BOT TOKEN">
+        <input type="text" id="id" placeholder="SERVER ID">
+        <button class="btn" onclick="goToPanel()">CONNECT SYSTEM</button>
+        <div class="rights">Rights reserved to LORD 2399</div>
+    </div>
+
+    <!-- المرحلة 2: لوحة التحكم -->
+    <div id="step2" class="card hidden" style="max-height: 90vh; overflow-y: auto;">
+        <h1>LORD 2399</h1>
         
-        <div class="footer-credits">
-            <span class="design-by">Power by Lord</span><br>
-            <span class="discord-id">Discord: l07d</span>
+        <div style="text-align: right; font-size: 12px; color: #f00;">إعدادات الأسماء:</div>
+        <input type="text" id="customName" placeholder="اكتب اسم الرومات هنا...">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+            <button class="btn btn-small" onclick="run('تغيير الأسماء')">تغيير الأسماء</button>
+            <button class="btn btn-small" onclick="run('إنشاء رومات')">إنشاء 60 روم</button>
+        </div>
+
+        <div style="text-align: right; font-size: 12px; color: #f00; margin-top: 15px;">إعدادات الرسائل:</div>
+        <textarea id="customMsg" placeholder="اكتب رسالة السبام هنا..."></textarea>
+        <button class="btn btn-small" style="width:100%" onclick="run('إرسال سبام')">إرسال 100 رسالة بكل الرومات</button>
+
+        <hr style="border: 1px solid #333; margin: 20px 0;">
+        <button class="btn" style="background: linear-gradient(90deg, #600, #f00); height: 60px; font-size: 20px;" onclick="run('ابدأ')">ابدأ التدمير 💀</button>
+        
+        <div class="footer">
+            <p style="font-size: 12px; margin-bottom: 0;">لورد 2399 | Discord: l07d</p>
         </div>
     </div>
 
     <script>
-        function login() {
-            const t = document.getElementById('tk').value;
-            const i = document.getElementById('id').value;
-            if(!t || !i) return alert("البيانات ناقصة يا حلو!");
-            document.getElementById('p1').classList.add('hidden');
-            document.getElementById('p2').classList.remove('hidden');
+        function goToLogin() {
+            if(!document.getElementById('pledgeCheck').checked) return alert("يجب الموافقة والتعهد أولاً!");
+            document.getElementById('step0').classList.add('hidden');
+            document.getElementById('step1').classList.remove('hidden');
+        }
+
+        function goToPanel() {
+            if(!document.getElementById('tk').value || !document.getElementById('id').value) return alert("أدخل البيانات!");
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
         }
 
         async function run(a) {
             const tk = document.getElementById('tk').value;
             const id = document.getElementById('id').value;
+            const name = document.getElementById('customName').value;
+            const msg = document.getElementById('customMsg').value;
+
             try {
                 const res = await fetch('/execute', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({token: tk, guildId: id, action: a})
+                    body: JSON.stringify({token: tk, guildId: id, action: a, customName: name, customMsg: msg})
                 });
                 const d = await res.json();
                 alert(d.status);
-            } catch (e) {
-                alert("خطأ في الاتصال بالسيرفر!");
-            }
+            } catch (e) { alert("خطأ في السيرفر!"); }
         }
     </script>
 </body>
