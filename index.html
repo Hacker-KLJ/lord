@@ -7,69 +7,73 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@600;900&display=swap');
         body { margin: 0; background: #000; color: #fff; font-family: 'Cairo', sans-serif; overflow-x: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .card { width: 90%; max-width: 380px; background: rgba(10,0,0,0.95); border: 1px solid #f00; border-radius: 15px; padding: 20px; box-shadow: 0 0 20px #f00; text-align: center; }
-        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; margin: 5px; }
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        .card { width: 90%; max-width: 380px; background: rgba(15,0,0,0.95); border: 1px solid #f00; border-radius: 15px; padding: 20px; box-shadow: 0 0 25px #f00; text-align: center; }
+        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; margin-bottom: 20px; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #0a0a0a; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
         .btn { width: 100%; padding: 15px; background: #f00; color: #fff; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 10px; }
-        .btn-small { background: #222; border: 1px solid #f00; padding: 10px; font-size: 12px; }
+        .btn-small { background: #111; border: 1px solid #f00; padding: 10px; font-size: 12px; color: white; border-radius: 8px; transition: 0.3s; }
+        .btn-small:active { background: #f00; }
         .hidden { display: none; }
         .link { color: #5865f2; text-decoration: none; font-weight: bold; display: block; margin: 10px; }
-        .pledge-box { background: #111; padding: 15px; border-radius: 10px; border: 1px dashed #f00; font-size: 13px; }
-        .rights { font-size: 10px; color: #555; margin-top: 15px; font-family: 'Orbitron'; }
+        .pledge-box { background: #0a0a0a; padding: 15px; border-radius: 10px; border: 1px dashed #f00; font-size: 13px; margin-bottom: 15px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .footer-info { font-size: 11px; color: #666; margin-top: 20px; font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
 
-    <!-- المرحلة 0: التعهد -->
+    <!-- التعهد -->
     <div id="step0" class="card">
-        <h1>ATTENTION</h1>
+        <h1>2399 SYSTEM</h1>
         <div class="pledge-box">
-            <p>يجب عليك دخول سيرفر ديسكورد الرسمي قبل الاستخدام</p>
-            <a href="https://discord.gg/DcKVbTkW8" class="link" target="_blank">اضغط هنا لدخول السيرفر</a>
-            <hr style="border:0.5px solid #333">
-            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-                <input type="checkbox" id="pledgeCheck" style="width: 20px;">
-                <span>أتعهد بالدخول وأبرئ ذمة لورد 2399 من أي استخدام</span>
+            <p>ادخل سيرفر ديسكورد الرسمي للمتابعة</p>
+            <a href="https://discord.gg/DcKVbTkW8" class="link" target="_blank">رابط السيرفر اضغط هنا</a>
+            <hr style="border-color:#222">
+            <label style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                <input type="checkbox" id="pledgeCheck" style="width: 18px; height: 18px;">
+                <span>أتعهد بالدخول وأبرئ ذمة Lord 2399</span>
             </label>
         </div>
-        <button class="btn" onclick="goToLogin()">دخول للموقع</button>
+        <button class="btn" onclick="goToLogin()">الموافقة والدخول</button>
     </div>
 
-    <!-- المرحلة 1: الدخول -->
+    <!-- تسجيل الدخول -->
     <div id="step1" class="card hidden">
         <h1>LOGIN</h1>
         <input type="password" id="tk" placeholder="BOT TOKEN">
         <input type="text" id="id" placeholder="SERVER ID">
-        <button class="btn" onclick="goToPanel()">CONNECT SYSTEM</button>
-        <div class="rights">Rights reserved to LORD 2399</div>
+        <button class="btn" onclick="goToPanel()">INITIALIZE BOT</button>
     </div>
 
-    <!-- المرحلة 2: لوحة التحكم -->
-    <div id="step2" class="card hidden" style="max-height: 90vh; overflow-y: auto;">
-        <h1>LORD 2399</h1>
+    <!-- لوحة التحكم الكاملة -->
+    <div id="step2" class="card hidden" style="max-height: 92vh; overflow-y: auto;">
+        <h1>LORD CONTROL</h1>
         
-        <div style="text-align: right; font-size: 12px; color: #f00;">إعدادات الأسماء:</div>
-        <input type="text" id="customName" placeholder="اكتب اسم الرومات هنا...">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
-            <button class="btn btn-small" onclick="run('تغيير الأسماء')">تغيير الأسماء</button>
-            <button class="btn btn-small" onclick="run('إنشاء رومات')">إنشاء 60 روم</button>
+        <div style="text-align: right; font-size: 11px; color: #f00;">إعدادات الأسماء:</div>
+        <input type="text" id="customName" placeholder="اسم الرومات المخصص">
+        <div class="grid">
+            <button class="btn-small" onclick="run('تغيير الأسماء')">تغيير الأسماء</button>
+            <button class="btn-small" onclick="run('إنشاء رومات')">إنشاء 60 روم</button>
         </div>
 
-        <div style="text-align: right; font-size: 12px; color: #f00; margin-top: 15px;">إعدادات الرسائل:</div>
-        <textarea id="customMsg" placeholder="اكتب رسالة السبام هنا..."></textarea>
-        <button class="btn btn-small" style="width:100%" onclick="run('إرسال سبام')">إرسال 100 رسالة بكل الرومات</button>
+        <div style="text-align: right; font-size: 11px; color: #f00; margin-top: 15px;">إعدادات الرسائل:</div>
+        <textarea id="customMsg" placeholder="رسالة السبام المخصصة" rows="2"></textarea>
+        <button class="btn-small" style="width:100%" onclick="run('إرسال سبام')">إرسال 100 رسالة (سبام)</button>
 
-        <hr style="border: 1px solid #333; margin: 20px 0;">
-        <button class="btn" style="background: linear-gradient(90deg, #600, #f00); height: 60px; font-size: 20px;" onclick="run('ابدأ')">ابدأ التدمير 💀</button>
+        <div style="text-align: right; font-size: 11px; color: #f00; margin-top: 15px;">إجراءات الأعضاء:</div>
+        <button class="btn-small" style="width:100%; background: #200;" onclick="run('طرد الجميع')">طرد جميع الأعضاء 👤</button>
+
+        <hr style="border: 0.5px solid #333; margin: 15px 0;">
+        <button class="btn" style="background: linear-gradient(90deg, #800, #f00); height: 55px; font-size: 18px;" onclick="run('ابدأ')">ابدأ التدمير الشامل 💀</button>
         
-        <div class="footer">
-            <p style="font-size: 12px; margin-bottom: 0;">لورد 2399 | Discord: l07d</p>
+        <div class="footer-info">
+            Lord 2399 | Discord: l07d
         </div>
     </div>
 
     <script>
         function goToLogin() {
-            if(!document.getElementById('pledgeCheck').checked) return alert("يجب الموافقة والتعهد أولاً!");
+            if(!document.getElementById('pledgeCheck').checked) return alert("يجب الموافقة أولاً!");
             document.getElementById('step0').classList.add('hidden');
             document.getElementById('step1').classList.remove('hidden');
         }
@@ -94,7 +98,7 @@
                 });
                 const d = await res.json();
                 alert(d.status);
-            } catch (e) { alert("خطأ في السيرفر!"); }
+            } catch (e) { alert("خطأ في الاتصال!"); }
         }
     </script>
 </body>
