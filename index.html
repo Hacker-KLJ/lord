@@ -3,21 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LORD 2399 PANEL</title>
+    <title>LORD 2399</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@600;900&display=swap');
-        body { margin: 0; background: #000; color: #fff; font-family: 'Cairo', sans-serif; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        #video-bg { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 100%; min-height: 100%; z-index: -2; object-fit: cover; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.25); z-index: -1; }
-        .card { width: 85%; max-width: 350px; background: rgba(0, 0, 0, 0.45); border: 1.5px solid rgba(255, 0, 0, 0.7); border-radius: 20px; padding: 20px; box-shadow: 0 0 35px rgba(255, 0, 0, 0.6); text-align: center; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
-        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 15px #f00; font-size: 24px; margin-bottom: 15px; }
-        input, textarea { width: 100%; padding: 10px; margin: 6px 0; background: rgba(0,0,0,0.6); border: 1px solid #444; color: #fff; border-radius: 10px; font-size: 13px; outline: none; }
-        .btn { width: 100%; padding: 12px; background: rgba(255, 0, 0, 0.8); color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; margin-top: 8px; box-shadow: 0 0 10px #f00; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-        .btn-small { background: rgba(17, 17, 17, 0.7); border: 1px solid #f00; padding: 10px; font-size: 11px; color: white; border-radius: 8px; }
-        .pledge-box { background: rgba(0,0,0,0.6); padding: 12px; border-radius: 12px; border: 1px dashed rgba(255,0,0,0.6); font-size: 12px; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@900&display=swap');
+        body { margin: 0; background: #000; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        
+        /* فيديو مقاس الجوال تماماً */
+        #video-bg { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: -2; object-fit: cover; 
+        }
+
+        /* لوحة مخفية (شفافية عالية) */
+        .card { 
+            width: 85%; max-width: 340px; 
+            background: rgba(0, 0, 0, 0.25); /* شفافة جداً لدرجة الاختفاء */
+            border: 1px solid rgba(255, 0, 0, 0.4); 
+            border-radius: 20px; padding: 20px; 
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); 
+            text-align: center; color: #fff;
+            backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); 
+        }
+
+        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; font-size: 22px; margin-bottom: 10px; }
+        input, textarea { width: 100%; padding: 10px; margin: 5px 0; background: rgba(0,0,0,0.4); border: 1px solid #444; color: #fff; border-radius: 10px; font-size: 12px; }
+        .btn { width: 100%; padding: 12px; background: rgba(255, 0, 0, 0.6); color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; margin-top: 5px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 5px; }
+        .btn-small { background: rgba(0, 0, 0, 0.5); border: 1px solid #f00; padding: 8px; font-size: 10px; color: white; border-radius: 8px; }
+        .pledge-box { background: rgba(0,0,0,0.4); padding: 10px; border-radius: 12px; border: 1px dashed #f00; font-size: 11px; }
         .hidden { display: none; }
-        .footer-info { font-size: 10px; color: #eee; margin-top: 15px; font-family: 'Orbitron'; text-shadow: 1px 1px 2px #000; }
+        .footer-info { font-size: 9px; color: #ccc; margin-top: 10px; font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
@@ -25,16 +40,15 @@
     <video autoplay loop muted playsinline id="video-bg">
         <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
     </video>
-    <div class="overlay"></div>
 
     <div id="step0" class="card">
         <h1>2399 SYSTEM</h1>
         <div class="pledge-box">
-            <p style="margin-top:0">ادخل سيرفر ديسكورد الرسمي</p>
-            <a href="https://discord.gg/2399k" style="color:#5865f2; text-decoration:none; font-weight:bold" target="_blank">اضغط هنا للدخول</a>
-            <hr style="border-color:#333; margin:10px 0">
-            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size:11px">
-                <input type="checkbox" id="pledgeCheck" style="width: 16px; height: 16px;">
+            <p>ادخل سيرفر ديسكورد الرسمي</p>
+            <a href="https://discord.gg/2399k" style="color:#5865f2; text-decoration:none; font-weight:bold" target="_blank">رابط السيرفر</a>
+            <hr style="border-color:#333">
+            <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                <input type="checkbox" id="pledgeCheck">
                 <span>أتعهد بالدخول وأبرئ ذمة Lord 2399</span>
             </label>
         </div>
@@ -45,20 +59,20 @@
         <h1>LOGIN</h1>
         <input type="password" id="tk" placeholder="BOT TOKEN">
         <input type="text" id="id" placeholder="SERVER ID">
-        <button class="btn" onclick="goToPanel()">INITIALIZE</button>
+        <button class="btn" onclick="goToPanel()">CONNECT</button>
     </div>
 
-    <div id="step2" class="card hidden" style="max-height: 85vh; overflow-y: auto;">
-        <h1>LORD CONTROL</h1>
+    <div id="step2" class="card hidden">
+        <h1>LORD PANEL</h1>
         <input type="text" id="customName" placeholder="اسم الرومات">
         <div class="grid">
             <button class="btn-small" onclick="run('تغيير الأسماء')">تغيير الأسماء</button>
             <button class="btn-small" onclick="run('إنشاء رومات')">إنشاء 60 روم</button>
         </div>
         <textarea id="customMsg" placeholder="رسالة السبام" rows="2"></textarea>
-        <button class="btn-small" style="width:100%" onclick="run('إرسال سبام')">إرسال سبام ⚡</button>
-        <button class="btn-small" style="width:100%; background: rgba(50, 0, 0, 0.7); margin-top:8px;" onclick="run('طرد الجميع')">طرد الجميع 👤</button>
-        <button class="btn" onclick="run('ابدأ')">ابدأ التدمير 💀</button>
+        <button class="btn-small" style="width:100%" onclick="run('إرسال سبام')">إرسال سبام</button>
+        <button class="btn-small" style="width:100%; background: rgba(50,0,0,0.4); margin-top:5px" onclick="run('طرد الجميع')">طرد الجميع 👤</button>
+        <button class="btn" onclick="run('ابدأ التدمير 💀')">ابدأ التدمير 💀</button>
         <div class="footer-info">Lord 2399 | Discord: l07d</div>
     </div>
 
