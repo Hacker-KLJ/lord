@@ -2,111 +2,64 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LORD 2399 V6</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LORD V7 PRO</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@800&display=swap');
-        
-        body { margin: 0; background: #000; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Cairo', sans-serif; color: #fff; }
-        #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; filter: brightness(0.5); }
-        
-        .card { 
-            width: 85%; max-width: 380px; 
-            background: rgba(0, 0, 0, 0.2); 
-            border: 1px solid rgba(255, 0, 0, 0.5); 
-            border-radius: 20px; padding: 25px; 
-            text-align: center; backdrop-filter: blur(15px); 
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-            animation: fadeIn 1s ease;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; font-size: 20px; margin-bottom: 20px; }
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; border-radius: 10px; outline: none; box-sizing: border-box; }
-        input:focus { border-color: #f00; }
-
-        .btn { width: 100%; padding: 15px; background: #f00; color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; transition: 0.3s; margin-top: 10px; box-shadow: 0 5px 15px rgba(255,0,0,0.3); }
-        .btn:active { transform: scale(0.98); }
-        
-        /* Loader */
-        .loader-ring { border: 4px solid #111; border-top: 4px solid #f00; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
+        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.5; }
+        .card { width: 90%; max-width: 380px; background: rgba(0,0,0,0.4); border: 2px solid #f00; border-radius: 20px; padding: 25px; text-align: center; backdrop-filter: blur(10px); }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: rgba(0,0,0,0.6); border: 1px solid #f00; color: #fff; border-radius: 10px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 15px; background: #f00; color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .hidden { display: none; }
-        .pledge-box { background: rgba(255,0,0,0.1); padding: 15px; border-radius: 10px; border: 1px dashed #f00; margin-bottom: 15px; font-size: 13px; }
     </style>
 </head>
 <body>
+    <video autoplay loop muted playsinline><source src="https://a.top4top.io/m_3745ydpjj9.mp4"></video>
 
-    <video autoplay loop muted playsinline id="bg-video">
-        <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
-    </video>
-
-    <!-- 1. شاشة جاري الدخول -->
-    <div id="step0" class="card">
-        <h1>LOADING SYSTEM...</h1>
-        <div class="loader-ring"></div>
-        <p style="font-size: 12px; color: #aaa;">Tools Lord v4 2399</p>
+    <!-- صفحة التحميل -->
+    <div id="s0" class="card">
+        <h2 style="color:#f00">Lord v4 2399</h2>
+        <div style="border:3px solid #111; border-top:3px solid #f00; border-radius:50%; width:30px; height:30px; animation:spin 1s linear infinite; margin:20px auto"></div>
     </div>
 
-    <!-- 2. شاشة التعهد -->
-    <div id="step1" class="card hidden">
-        <h1>V6 PLEDGE</h1>
-        <div class="pledge-box">
-            <p>يجب الانضمام للمقر للمتابعة</p>
-            <a href="https://discord.gg/2399k" target="_blank" style="color:#f00; text-decoration:none;">اضغط هنا للدخول</a>
-            <hr style="border:0.5px solid #333; margin:10px 0">
-            <label style="cursor:pointer"><input type="checkbox" id="pledgeCheck"> أتعهد بالدخول للسيرفر</label>
-        </div>
-        <button class="btn" onclick="next(1, 2)">استمرار</button>
-    </div>
-
-    <!-- 3. شاشة الدخول -->
-    <div id="step2" class="card hidden">
-        <h1>LOGIN</h1>
+    <!-- اللوحة -->
+    <div id="s1" class="card hidden">
+        <h1 style="color:#f00; font-size:20px">Tools Lord v4 2399</h1>
         <input type="password" id="tk" placeholder="توكن البوت">
         <input type="text" id="id" placeholder="ايدي السيرفر">
-        <button class="btn" onclick="next(2, 3)">فتح اللوحة</button>
-    </div>
-
-    <!-- 4. اللوحة النهائية -->
-    <div id="step3" class="card hidden">
-        <h1>Tools Lord v4 2399</h1>
-        <input type="text" id="nm" placeholder="اسم الرومات الجديد">
-        <textarea id="ms" placeholder="رسالة التدمير" rows="2"></textarea>
-        <button class="btn" onclick="fire('تدمير')" style="background: linear-gradient(to bottom, #f00, #600);">تدمير شامل V6 💀</button>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
-            <button class="btn" onclick="fire('طرد')" style="background:#111; border:1px solid #f00; font-size:12px;">طرد الكل</button>
-            <button class="btn" onclick="fire('سبام')" style="background:#111; border:1px solid #f00; font-size:12px;">سبام فقط</button>
-        </div>
+        <input type="text" id="nm" placeholder="اسم الرومات">
+        <textarea id="ms" placeholder="رسالة التدمير"></textarea>
+        <button class="btn" onclick="fire('تدمير')">تدمير شامل 💀</button>
+        <button class="btn" style="background:#222; border:1px solid #f00" onclick="fire('طرد')">طرد الجميع 👤</button>
     </div>
 
     <script>
-        // التحميل التلقائي بعد 3 ثواني
-        setTimeout(() => next(0, 1), 3000);
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        setTimeout(() => { document.getElementById('s0').classList.add('hidden'); document.getElementById('s1').classList.remove('hidden'); }, 3000);
 
-        function next(f, t) {
-            if(f === 1 && !document.getElementById('pledgeCheck').checked) return alert("وافق على التعهد!");
-            document.getElementById('step'+f).classList.add('hidden');
-            document.getElementById('step'+t).classList.remove('hidden');
-        }
-
-        async function fire(action) {
-            const botData = {
-                token: document.getElementById('tk').value,
-                guildId: document.getElementById('id').value,
-                customName: document.getElementById('nm').value,
-                customMsg: document.getElementById('ms').value,
-                action: action
-            };
-
-            fetch('/execute', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(botData)
-            });
-            alert("🚀 القوة انطلقت! راقب السيرفر الآن");
+        async function fire(act) {
+            const btn = event.target;
+            btn.innerText = "جاري الاتصال...";
+            
+            try {
+                const res = await fetch('/execute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        token: document.getElementById('tk').value,
+                        guildId: document.getElementById('id').value,
+                        customName: document.getElementById('nm').value,
+                        customMsg: document.getElementById('ms').value,
+                        action: act
+                    })
+                });
+                
+                const data = await res.json();
+                alert(data.status); // هنا بيطلع لك ليش البوت ما اشتغل بالضبط
+            } catch (e) {
+                alert("❌ خطأ: السيرفر طافي أو Render معلق");
+            }
+            btn.innerText = "تدمير شامل 💀";
         }
     </script>
 </body>
