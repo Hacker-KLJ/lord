@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LORD 2399 Tools v3</title>
+    <title>LORD 2399 Tools V3</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@600;900&display=swap');
         
         body { margin: 0; background: #000; color: #fff; font-family: 'Cairo', sans-serif; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
         
-        /* فيديو الخلفية المباشر (Direct MP4) */
+        /* ضبط الفيديو ليكون على مقاس الشاشة بالتمام بدون قص مخل */
         #video-bg {
             position: fixed;
-            right: 0;
-            bottom: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             min-width: 100%;
             min-height: 100%;
+            width: auto;
+            height: auto;
             z-index: -2;
-            object-fit: cover;
-            /* تم حذف التعتيم ليكون الفيديو ساطعاً */
+            object-fit: cover; /* يغطي الشاشة مع الحفاظ على التناسب */
         }
 
         .overlay {
@@ -27,114 +29,103 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3); /* تعتيم خفيف جداً للشاشة ككل */
+            background: rgba(0, 0, 0, 0.2); /* تعتيم خفيف جداً */
             z-index: -1;
         }
 
-        /* لوحة التحكم: زيادة الشفافية (مخفية شوية) */
+        /* لوحة التحكم: شفافة جداً عشان المقطع يوضح */
         .card { 
-            width: 90%; 
-            max-width: 380px; 
-            background: rgba(10, 0, 0, 0.5); /* تم تقليل الـ Alpha لتصبح شفافة جداً */
-            border: 2px solid #f00; 
-            border-radius: 15px; 
+            width: 85%; 
+            max-width: 350px; 
+            background: rgba(0, 0, 0, 0.4); /* شفافة جداً */
+            border: 1.5px solid rgba(255, 0, 0, 0.6); 
+            border-radius: 20px; 
             padding: 20px; 
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.7); /* زيادة التوهج لتعويض الشفافية */
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5); 
             text-align: center; 
-            backdrop-filter: blur(3px); /* تقليل الضبابية لرؤية أوضح للفيديو */
-            -webkit-backdrop-filter: blur(3px); /* للأيفون */
+            backdrop-filter: blur(2px); /* ضبابية خفيفة جداً */
+            -webkit-backdrop-filter: blur(2px);
         }
 
-        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; margin-bottom: 20px; }
+        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 15px #f00; font-size: 24px; margin-bottom: 15px; }
         
-        /* جعل الحقول شفافة أيضاً */
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: rgba(0,0,0,0.5); border: 1px solid #555; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
-        input:focus { border-color: #f00; }
-
-        .btn { width: 100%; padding: 15px; background: rgba(255, 0, 0, 0.8); color: #fff; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 10px; box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
-        .btn-small { background: rgba(17, 17, 17, 0.7); border: 1px solid #f00; padding: 10px; font-size: 12px; color: white; border-radius: 8px; transition: 0.3s; }
-        .btn-small:active { background: #f00; }
-        .hidden { display: none; }
-        .link { color: #5865f2; text-decoration: none; font-weight: bold; display: block; margin: 10px; }
-        .pledge-box { background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; border: 1px dashed #f00; font-size: 13px; margin-bottom: 15px; }
+        input, textarea { width: 100%; padding: 10px; margin: 6px 0; background: rgba(0,0,0,0.6); border: 1px solid #444; color: #fff; border-radius: 10px; font-size: 13px; outline: none; }
+        
+        .btn { width: 100%; padding: 12px; background: rgba(255, 0, 0, 0.75); color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; margin-top: 8px; }
+        
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-        .footer-info { font-size: 11px; color: #ccc; margin-top: 20px; font-family: 'Orbitron'; text-shadow: 0 0 5px #000; }
+        
+        .btn-small { background: rgba(17, 17, 17, 0.6); border: 1px solid #f00; padding: 10px; font-size: 11px; color: white; border-radius: 8px; }
+        
+        .pledge-box { background: rgba(0,0,0,0.5); padding: 12px; border-radius: 12px; border: 1px dashed rgba(255,0,0,0.5); font-size: 12px; }
+
+        .hidden { display: none; }
+        .footer-info { font-size: 10px; color: #eee; margin-top: 15px; font-family: 'Orbitron'; text-shadow: 1px 1px 2px #000; }
+        
+        /* إخفاء شريط التمرير */
+        ::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
+    <!-- الفيديو بوضع الملء الكامل المناسب للجوال -->
     <video autoplay loop muted playsinline id="video-bg">
         <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
-        Your browser does not support the video tag.
     </video>
     <div class="overlay"></div>
 
+    <!-- كود الخطوات (التعهد، الدخول، اللوحة) كما هو بالسابق مع التنسيق الشفاف -->
     <div id="step0" class="card">
         <h1>2399 SYSTEM V3</h1>
         <div class="pledge-box">
-            <p>ادخل سيرفر ديسكورد الرسمي للمتابعة</p>
-            <a href="https://discord.gg/2399k" class="link" target="_blank">رابط السيرفر اضغط هنا</a>
-            <hr style="border-color:#555">
-            <label style="display: flex; align-items: center; gap: 10px; margin-top: 10px; cursor: pointer;">
-                <input type="checkbox" id="pledgeCheck" style="width: 18px; height: 18px;">
+            <p style="margin-top:0">ادخل سيرفر ديسكورد الرسمي</p>
+            <a href="https://discord.gg/2399k" style="color:#5865f2; text-decoration:none; font-weight:bold" target="_blank">اضغط هنا للدخول</a>
+            <hr style="border-color:#333; margin:10px 0">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size:11px">
+                <input type="checkbox" id="pledgeCheck" style="width: 16px; height: 16px;">
                 <span>أتعهد بالدخول وأبرئ ذمة Lord 2399</span>
             </label>
         </div>
         <button class="btn" onclick="goToLogin()">الموافقة والدخول</button>
-        <div class="footer-info">DESIGNED BY LORD 2399</div>
     </div>
 
     <div id="step1" class="card hidden">
-        <h1>Tools Group 2399 V3 ☠️</h1>
+        <h1>2399 Tools V3 ☠️</h1>
         <input type="password" id="tk" placeholder="BOT TOKEN">
         <input type="text" id="id" placeholder="SERVER ID">
         <button class="btn" onclick="goToPanel()">Login</button>
     </div>
 
-    <div id="step2" class="card hidden" style="max-height: 92vh; overflow-y: auto;">
+    <div id="step2" class="card hidden" style="max-height: 85vh; overflow-y: auto;">
         <h1>LORD CONTROL</h1>
-        
-        <div style="text-align: right; font-size: 11px; color: #f00; text-shadow: 0 0 5px #000;">إعدادات الأسماء:</div>
-        <input type="text" id="customName" placeholder="اسم الرومات المخصص">
+        <input type="text" id="customName" placeholder="اسم الرومات">
         <div class="grid">
             <button class="btn-small" onclick="run('تغيير الأسماء')">تغيير الأسماء</button>
             <button class="btn-small" onclick="run('إنشاء رومات')">إنشاء 60 روم</button>
         </div>
-
-        <div style="text-align: right; font-size: 11px; color: #f00; margin-top: 15px; text-shadow: 0 0 5px #000;">إعدادات الرسائل:</div>
-        <textarea id="customMsg" placeholder="رسالة السبام المخصصة" rows="2"></textarea>
-        <button class="btn-small" style="width:100%" onclick="run('إرسال سبام')">إرسال 100 رسالة (سبام)</button>
-
-        <div style="text-align: right; font-size: 11px; color: #f00; margin-top: 15px; text-shadow: 0 0 5px #000;">إجراءات الأعضاء:</div>
-        <button class="btn-small" style="width:100%; background: rgba(32, 0, 0, 0.6);" onclick="run('طرد الجميع')">طرد جميع الأعضاء 👤</button>
-
-        <hr style="border: 0.5px solid #555; margin: 15px 0;">
-        <button class="btn" style="background: linear-gradient(90deg, rgba(128,0,0,0.8), rgba(255,0,0,0.8)); height: 55px; font-size: 18px;" onclick="run('ابدأ')">ابدأ التدمير الشامل 💀</button>
-        
-        <div class="footer-info">
-            Lord 2399 | Discord: l07d
-        </div>
+        <textarea id="customMsg" placeholder="رسالة السبام" rows="2"></textarea>
+        <button class="btn-small" style="width:100%" onclick="run('إرسال سبام')">إرسال 100 رسالة</button>
+        <button class="btn-small" style="width:100%; background: rgba(50, 0, 0, 0.6); margin-top:8px;" onclick="run('طرد الجميع')">طرد الجميع 👤</button>
+        <button class="btn" style="background: linear-gradient(90deg, rgba(150,0,0,0.8), rgba(255,0,0,0.8));" onclick="run('ابدأ')">ابدأ التدمير 💀</button>
+        <div class="footer-info">Lord 2399 | Discord: l07d</div>
     </div>
 
     <script>
         function goToLogin() {
-            if(!document.getElementById('pledgeCheck').checked) return alert("يجب الموافقة أولاً!");
+            if(!document.getElementById('pledgeCheck').checked) return alert("وافق أولاً!");
             document.getElementById('step0').classList.add('hidden');
             document.getElementById('step1').classList.remove('hidden');
         }
-
         function goToPanel() {
             if(!document.getElementById('tk').value || !document.getElementById('id').value) return alert("أدخل البيانات!");
             document.getElementById('step1').classList.add('hidden');
             document.getElementById('step2').classList.remove('hidden');
         }
-
         async function run(a) {
             const tk = document.getElementById('tk').value;
             const id = document.getElementById('id').value;
             const name = document.getElementById('customName').value;
             const msg = document.getElementById('customMsg').value;
-
             try {
                 const res = await fetch('/execute', {
                     method: 'POST',
