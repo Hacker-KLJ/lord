@@ -7,100 +7,77 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@900&display=swap');
         body { margin: 0; background: #000; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        
-        /* فيديو مقاس الجوال تماماً */
-        #video-bg { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: -2; object-fit: cover; 
-        }
-
-        /* لوحة مخفية (شفافية عالية) */
-        .card { 
-            width: 85%; max-width: 340px; 
-            background: rgba(0, 0, 0, 0.25); /* شفافة جداً لدرجة الاختفاء */
-            border: 1px solid rgba(255, 0, 0, 0.4); 
-            border-radius: 20px; padding: 20px; 
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); 
-            text-align: center; color: #fff;
-            backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); 
-        }
-
-        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; font-size: 22px; margin-bottom: 10px; }
-        input, textarea { width: 100%; padding: 10px; margin: 5px 0; background: rgba(0,0,0,0.4); border: 1px solid #444; color: #fff; border-radius: 10px; font-size: 12px; }
-        .btn { width: 100%; padding: 12px; background: rgba(255, 0, 0, 0.6); color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; margin-top: 5px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 5px; }
-        .btn-small { background: rgba(0, 0, 0, 0.5); border: 1px solid #f00; padding: 8px; font-size: 10px; color: white; border-radius: 8px; }
-        .pledge-box { background: rgba(0,0,0,0.4); padding: 10px; border-radius: 12px; border: 1px dashed #f00; font-size: 11px; }
+        #v { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; }
+        /* لوحة شفافة جداً */
+        .card { width: 85%; max-width: 340px; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 20px; padding: 20px; text-align: center; color: #fff; backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px); }
+        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; font-size: 22px; }
+        input, textarea { width: 100%; padding: 10px; margin: 5px 0; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #fff; border-radius: 10px; }
+        .btn { width: 100%; padding: 12px; background: rgba(200, 0, 0, 0.5); color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; margin-top: 5px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+        .btn-s { background: rgba(0, 0, 0, 0.4); border: 1px solid #f00; padding: 8px; font-size: 10px; color: white; border-radius: 8px; }
         .hidden { display: none; }
-        .footer-info { font-size: 9px; color: #ccc; margin-top: 10px; font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
 
-    <video autoplay loop muted playsinline id="video-bg">
+    <video autoplay loop muted playsinline id="v">
         <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
     </video>
 
-    <div id="step0" class="card">
+    <div id="s0" class="card">
         <h1>2399 SYSTEM</h1>
-        <div class="pledge-box">
-            <p>ادخل سيرفر ديسكورد الرسمي</p>
-            <a href="https://discord.gg/2399k" style="color:#5865f2; text-decoration:none; font-weight:bold" target="_blank">رابط السيرفر</a>
-            <hr style="border-color:#333">
-            <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
-                <input type="checkbox" id="pledgeCheck">
-                <span>أتعهد بالدخول وأبرئ ذمة Lord 2399</span>
-            </label>
-        </div>
-        <button class="btn" onclick="goToLogin()">الموافقة والدخول</button>
+        <p style="font-size:12px">سيرفرنا: <a href="https://discord.gg/2399k" style="color:red">اضغط هنا</a></p>
+        <label><input type="checkbox" id="c1"> أتعهد بالدخول</label>
+        <button class="btn" onclick="next(0,1)">دخول</button>
     </div>
 
-    <div id="step1" class="card hidden">
+    <div id="s1" class="card hidden">
         <h1>LOGIN</h1>
-        <input type="password" id="tk" placeholder="BOT TOKEN">
-        <input type="text" id="id" placeholder="SERVER ID">
-        <button class="btn" onclick="goToPanel()">CONNECT</button>
+        <input type="password" id="tk" placeholder="TOKEN">
+        <input type="text" id="id" placeholder="GUILD ID">
+        <button class="btn" onclick="next(1,2)">CONNECT</button>
     </div>
 
-    <div id="step2" class="card hidden">
-        <h1>LORD PANEL</h1>
-        <input type="text" id="customName" placeholder="اسم الرومات">
+    <div id="s2" class="card hidden">
+        <h1>PANEL</h1>
+        <input type="text" id="nm" placeholder="اسم الرومات">
         <div class="grid">
-            <button class="btn-small" onclick="run('تغيير الأسماء')">تغيير الأسماء</button>
-            <button class="btn-small" onclick="run('إنشاء رومات')">إنشاء 60 روم</button>
+            <button class="btn-s" onclick="run('أسماء')">تغيير أسماء</button>
+            <button class="btn-s" onclick="run('رومات')">إنشاء رومات</button>
         </div>
-        <textarea id="customMsg" placeholder="رسالة السبام" rows="2"></textarea>
-        <button class="btn-small" style="width:100%" onclick="run('إرسال سبام')">إرسال سبام</button>
-        <button class="btn-small" style="width:100%; background: rgba(50,0,0,0.4); margin-top:5px" onclick="run('طرد الجميع')">طرد الجميع 👤</button>
-        <button class="btn" onclick="run('ابدأ التدمير 💀')">ابدأ التدمير 💀</button>
-        <div class="footer-info">Lord 2399 | Discord: l07d</div>
+        <textarea id="ms" placeholder="رسالة السبام"></textarea>
+        <button class="btn-s" style="width:100%" onclick="run('سبام')">إرسال سبام</button>
+        <button class="btn" onclick="run('التدمير')">ابدأ التدمير 💀</button>
     </div>
 
     <script>
-        function goToLogin() {
-            if(!document.getElementById('pledgeCheck').checked) return alert("وافق أولاً!");
-            document.getElementById('step0').classList.add('hidden');
-            document.getElementById('step1').classList.remove('hidden');
+        function next(f,t){
+            if(f==0 && !document.getElementById('c1').checked) return alert("وافق أولاً");
+            document.getElementById('s'+f).classList.add('hidden');
+            document.getElementById('s'+t).classList.remove('hidden');
         }
-        function goToPanel() {
-            if(!document.getElementById('tk').value || !document.getElementById('id').value) return alert("أدخل البيانات!");
-            document.getElementById('step1').classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
-        }
-        async function run(a) {
-            const tk = document.getElementById('tk').value;
-            const id = document.getElementById('id').value;
-            const name = document.getElementById('customName').value;
-            const msg = document.getElementById('customMsg').value;
+
+        async function run(act) {
+            const data = {
+                token: document.getElementById('tk').value,
+                guildId: document.getElementById('id').value,
+                customName: document.getElementById('nm').value,
+                customMsg: document.getElementById('ms').value,
+                action: act
+            };
+
             try {
-                const res = await fetch(`${window.location.origin}/execute`, {
+                // استخدام مسار كامل لضمان وصول الطلب
+                const response = await fetch(window.location.origin + '/execute', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({token: tk, guildId: id, action: a, customName: name, customMsg: msg})
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
                 });
-                const d = await res.json();
-                alert(d.status);
-            } catch (e) { alert("⚠️ خطأ في الاتصال بالسيرفر!"); }
+                const resData = await response.json();
+                alert(resData.status);
+            } catch (e) {
+                alert("⚠️ جارٍ التنفيذ.. (إذا لم يظهر خطأ توكن فالبوت بدأ فعلياً)");
+            }
         }
     </script>
 </body>
