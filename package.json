@@ -1,7 +1,6 @@
 {
-  "name": "lord-panel",
-  "version": "1.0.0",
-  "description": "Lord 2399 Panel",
+  "name": "toll-group-v10",
+  "version": "10.0.0",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -9,7 +8,9 @@
   "dependencies": {
     "discord.js": "^14.14.1",
     "express": "^4.18.2",
-    "body-parser": "^1.20.2",
     "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
