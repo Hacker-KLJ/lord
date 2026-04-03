@@ -1,7 +1,6 @@
 {
-  "name": "toll-group-2399-v11",
-  "version": "11.0.0",
-  "description": "Powerful Discord Tool by Lord 2399",
+  "name": "lord-2399-panel",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -10,11 +9,5 @@
     "discord.js": "^14.14.1",
     "express": "^4.18.2",
     "cors": "^2.8.5"
-  },
-  "engines": {
-    "node": "18.x"
-  },
-  "keywords": [],
-  "author": "Lord 2399",
-  "license": "ISC"
+  }
 }
