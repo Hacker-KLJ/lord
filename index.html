@@ -3,181 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LORD 2399 PANEL</title>
+    <title>Tools Lord v4 2399</title>
     <style>
-        /* الخطوط والتنسيق العام */
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@800&display=swap');
         
-        body { 
-            margin: 0; 
-            background: #000; 
-            overflow: hidden; 
-            height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-family: 'Cairo', sans-serif; 
-        }
+        body { margin: 0; background: #000; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Cairo', sans-serif; color: #fff; }
+        #bg-v { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: -1; }
 
-        /* خلفية الفيديو - مقاس الجوال تماماً */
-        #video-bg { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            z-index: -1; 
-            object-fit: cover; 
-        }
-
-        /* اللوحة - شفافة جداً ومخفية */
-        .card { 
-            width: 85%; 
-            max-width: 340px; 
-            background: rgba(0, 0, 0, 0.15); /* شفافية عالية جداً */
-            border: 1px solid rgba(255, 0, 0, 0.2); 
-            border-radius: 25px; 
-            padding: 25px; 
-            text-align: center; 
-            color: #fff;
-            backdrop-filter: blur(2px); 
-            -webkit-backdrop-filter: blur(2px);
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
-        }
-
-        h1 { color: #f00; text-shadow: 0 0 10px #f00; font-size: 24px; margin-bottom: 20px; font-weight: 900; }
+        .card { width: 85%; max-width: 360px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 30px; padding: 30px; text-align: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 0 30px rgba(255,0,0,0.2); animation: fadeIn 0.8s ease; }
         
-        input, textarea { 
-            width: 100%; 
-            padding: 12px; 
-            margin: 8px 0; 
-            background: rgba(0,0,0,0.4); 
-            border: 1px solid #333; 
-            color: #fff; 
-            border-radius: 12px; 
-            box-sizing: border-box; 
-            font-size: 14px;
-            outline: none;
-        }
-
-        /* الأزرار */
-        .btn { 
-            width: 100%; 
-            padding: 14px; 
-            background: rgba(255, 0, 0, 0.5); 
-            color: #fff; 
-            border: none; 
-            border-radius: 12px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-top: 10px;
-            transition: 0.3s;
-        }
+        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 15px #f00; font-size: 20px; margin-bottom: 20px; letter-spacing: 2px; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: rgba(0,0,0,0.6); border: 1px solid #444; color: #fff; border-radius: 12px; outline: none; font-size: 14px; }
         
-        .btn:active { transform: scale(0.95); background: rgba(255, 0, 0, 0.8); }
+        .btn { width: 100%; padding: 15px; background: linear-gradient(45deg, #f00, #800); color: #fff; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255,0,0,0.4); margin-top: 10px; }
+        .btn:active { transform: scale(0.95); }
+        .btn-sec { background: rgba(0,0,0,0.6); border: 1px solid #f00; font-size: 12px; padding: 10px; }
 
-        .btn-red { background: rgba(100, 0, 0, 0.4); border: 1px solid #f00; font-size: 12px; padding: 10px; }
+        /* أيقونة التحميل */
+        .loader { border: 4px solid #333; border-top: 4px solid #f00; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .hidden { display: none; }
-
-        /* صندوق التعهد */
-        .pledge-box { 
-            background: rgba(0,0,0,0.5); 
-            padding: 15px; 
-            border-radius: 15px; 
-            border: 1px dashed #f00; 
-            font-size: 13px; 
-            margin-bottom: 15px; 
-        }
-
-        a { color: #5865f2; text-decoration: none; font-weight: bold; }
+        .pledge { background: rgba(0,0,0,0.7); padding: 20px; border-radius: 15px; border: 1px dashed #f00; margin-bottom: 20px; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <!-- فيديو الخلفية -->
-    <video autoplay loop muted playsinline id="video-bg">
+    <video autoplay loop muted playsinline id="bg-v">
         <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
     </video>
+    <div class="overlay"></div>
 
-    <!-- الخطوة 0: التعهد -->
-    <div id="step0" class="card">
-        <h1>2399 SYSTEM</h1>
-        <div class="pledge-box">
-            <p>يجب الانضمام لسيرفرنا للمتابعة</p>
-            <a href="https://discord.gg/2399k" target="_blank">اضغط هنا للدخول</a>
-            <hr style="border-color:#444; margin:10px 0">
-            <label style="cursor:pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                <input type="checkbox" id="pCheck" style="width:18px; height:18px;"> 
-                أتعهد بالدخول للسيرفر
+    <!-- 1. صفحة جاري الدخول -->
+    <div id="loader-page" class="card">
+        <h1 style="font-family: 'Cairo'">Tools Lord v4 2399</h1>
+        <div class="loader"></div>
+        <p style="font-weight: bold; letter-spacing: 1px;">جاري الدخول...</p>
+    </div>
+
+    <!-- 2. صفحة التعهد -->
+    <div id="pledge-page" class="card hidden">
+        <h1>SECURITY CHECK</h1>
+        <div class="pledge">
+            <p>أهلاً بك في نظام التدمير V4</p>
+            <p>سيرفر الدعم: <a href="https://discord.gg/2399k" target="_blank" style="color: #f00;">انقر هنا</a></p>
+            <hr style="border: 0.5px solid #333; margin: 15px 0;">
+            <label style="cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <input type="checkbox" id="check" style="width: 20px; height: 20px;"> أتعهد بالدخول للسيرفر
             </label>
         </div>
-        <button class="btn" onclick="nextStep(0, 1)">استمرار</button>
+        <button class="btn" onclick="showLogin()">موافق، استمرار</button>
     </div>
 
-    <!-- الخطوة 1: تسجيل الدخول -->
-    <div id="step1" class="card hidden">
-        <h1>LOGIN</h1>
-        <input type="password" id="tk" placeholder="توكن البوت">
-        <input type="text" id="id" placeholder="ايدي السيرفر">
-        <button class="btn" onclick="nextStep(1, 2)">فتح اللوحة</button>
+    <!-- 3. صفحة تسجيل الدخول -->
+    <div id="login-page" class="card hidden">
+        <h1>LOGIN SYSTEM</h1>
+        <input type="password" id="tk" placeholder="BOT TOKEN">
+        <input type="text" id="id" placeholder="GUILD ID">
+        <button class="btn" onclick="showPanel()">دخول للوحة V4</button>
     </div>
 
-    <!-- الخطوة 2: لوحة التحكم -->
-    <div id="step2" class="card hidden">
-        <h1>CONTROL</h1>
+    <!-- 4. لوحة التحكم V4 -->
+    <div id="panel-page" class="card hidden">
+        <h1>Tools Lord v4 2399</h1>
         <input type="text" id="nm" placeholder="اسم الرومات">
-        <textarea id="ms" placeholder="رسالة السبام" rows="2"></textarea>
+        <textarea id="ms" placeholder="رسالة السبام المدمجة" rows="2"></textarea>
         
-        <button class="btn" style="background: rgba(255, 0, 0, 0.7);" onclick="fire('تدمير')">تدمير شامل + طرد 💀</button>
+        <button class="btn" onclick="fire('تدمير')">تدمير شامل + طرد الجميع 💀</button>
         
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px">
-            <button class="btn btn-red" onclick="fire('طرد')">طرد الكل 👤</button>
-            <button class="btn btn-red" onclick="fire('سبام')">سبام فقط ⚡</button>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+            <button class="btn btn-sec" onclick="fire('طرد')">طرد الجميع 👤</button>
+            <button class="btn btn-sec" onclick="fire('سبام')">سبام مضاعف ⚡</button>
         </div>
-        <p style="font-size:10px; margin-top:15px; opacity:0.5">Lord 2399 | https://discord.gg/2399k</p>
+        <p style="font-size: 10px; margin-top: 20px; opacity: 0.5; font-family: 'Orbitron'">LORD 2399 | V4.0.0</p>
     </div>
 
     <script>
-        // تنقل بين الخطوات
-        function nextStep(current, next) {
-            if (current === 0 && !document.getElementById('pCheck').checked) {
-                alert("يا لورد، لازم توافق على التعهد أولاً!");
-                return;
-            }
-            document.getElementById('step' + current).classList.add('hidden');
-            document.getElementById('step' + next).classList.remove('hidden');
+        // نظام الانتقال التلقائي من صفحة التحميل
+        setTimeout(() => {
+            document.getElementById('loader-page').classList.add('hidden');
+            document.getElementById('pledge-page').classList.remove('hidden');
+        }, 3000); // 3 ثواني تحميل
+
+        function showLogin() {
+            if(!document.getElementById('check').checked) return alert("يا لورد، وافق على التعهد أولاً!");
+            document.getElementById('pledge-page').classList.add('hidden');
+            document.getElementById('login-page').classList.remove('hidden');
         }
 
-        // إرسال الأوامر للسيرفر
-        async function fire(actionType) {
-            const botToken = document.getElementById('tk').value;
-            const serverId = document.getElementById('id').value;
-            const cName = document.getElementById('nm').value;
-            const cMsg = document.getElementById('ms').value;
+        function showPanel() {
+            if(!document.getElementById('tk').value || !document.getElementById('id').value) return alert("أكمل البيانات!");
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('panel-page').classList.remove('hidden');
+        }
 
-            if (!botToken || !serverId) {
-                alert("البيانات ناقصة يا لورد!");
-                return;
-            }
+        async function fire(act) {
+            const data = {
+                token: document.getElementById('tk').value,
+                guildId: document.getElementById('id').value,
+                customName: document.getElementById('nm').value,
+                customMsg: document.getElementById('ms').value,
+                action: act
+            };
 
-            // إرسال الطلب لـ Render
-            try {
-                fetch('/execute', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        token: botToken, 
-                        guildId: serverId, 
-                        action: actionType, 
-                        customName: cName, 
-                        customMsg: cMsg 
-                    })
-                });
-                alert("🚀 تم إرسال الأمر! شيك على السيرفر");
-            } catch (err) {
-                alert("خطأ في الاتصال بالسيرفر");
-            }
+            fetch('/execute', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            alert("🚀 القوة انطلقت! جاري التدمير المضاعف..");
         }
     </script>
 </body>
