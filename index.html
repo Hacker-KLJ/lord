@@ -3,104 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LORD V5 | ULTIMATE</title>
+    <title>LORD 2399 V6</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@800&display=swap');
         
         body { margin: 0; background: #000; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Cairo', sans-serif; color: #fff; }
-        #v-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; filter: brightness(0.6); }
+        #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; filter: brightness(0.5); }
         
         .card { 
-            width: 88%; max-width: 380px; 
-            background: rgba(0, 0, 0, 0.3); 
-            border: 2px solid #f00; 
-            border-radius: 20px; padding: 30px; 
-            text-align: center; backdrop-filter: blur(10px); 
-            box-shadow: 0 0 20px #f00, inset 0 0 10px #f00;
-            animation: glow 2s infinite alternate;
+            width: 85%; max-width: 380px; 
+            background: rgba(0, 0, 0, 0.2); 
+            border: 1px solid rgba(255, 0, 0, 0.5); 
+            border-radius: 20px; padding: 25px; 
+            text-align: center; backdrop-filter: blur(15px); 
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
         }
 
-        @keyframes glow { from { box-shadow: 0 0 10px #f00; } to { box-shadow: 0 0 30px #f00; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; font-size: 22px; margin-bottom: 20px; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: rgba(255,255,255,0.1); border: 1px solid #f00; color: #fff; border-radius: 10px; outline: none; box-sizing: border-box; }
+        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; font-size: 20px; margin-bottom: 20px; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; border-radius: 10px; outline: none; box-sizing: border-box; }
+        input:focus { border-color: #f00; }
+
+        .btn { width: 100%; padding: 15px; background: #f00; color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; transition: 0.3s; margin-top: 10px; box-shadow: 0 5px 15px rgba(255,0,0,0.3); }
+        .btn:active { transform: scale(0.98); }
         
-        .btn { width: 100%; padding: 15px; background: #f00; color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; transition: 0.3s; margin-top: 10px; text-transform: uppercase; }
-        .btn:hover { background: #b00; transform: scale(1.02); }
-        .loader { border: 5px solid #222; border-top: 5px solid #f00; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 20px auto; }
+        /* Loader */
+        .loader-ring { border: 4px solid #111; border-top: 4px solid #f00; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
         .hidden { display: none; }
+        .pledge-box { background: rgba(255,0,0,0.1); padding: 15px; border-radius: 10px; border: 1px dashed #f00; margin-bottom: 15px; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <video autoplay loop muted playsinline id="v-bg">
+    <video autoplay loop muted playsinline id="bg-video">
         <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
     </video>
 
-    <!-- صفحة 1: جاري الدخول -->
-    <div id="p1" class="card">
-        <h1 style="font-family:'Cairo'">جاري فحص النظام...</h1>
-        <div class="loader"></div>
-        <p>LORD 2399 V5 SYSTEM</p>
+    <!-- 1. شاشة جاري الدخول -->
+    <div id="step0" class="card">
+        <h1>LOADING SYSTEM...</h1>
+        <div class="loader-ring"></div>
+        <p style="font-size: 12px; color: #aaa;">Tools Lord v4 2399</p>
     </div>
 
-    <!-- صفحة 2: التعهد -->
-    <div id="p2" class="card hidden">
-        <h1>ACCESS DENIED</h1>
-        <div style="border: 1px dashed #f00; padding: 15px; margin-bottom: 20px; font-size: 13px;">
-            <p>يجب الانضمام للمقر أولاً</p>
-            <a href="https://discord.gg/2399k" target="_blank" style="color:#f00; font-weight:bold;">DISCORD SERVER</a>
-            <hr style="border: 0.5px solid #444; margin: 15px 0;">
-            <label><input type="checkbox" id="c"> أتعهد بالدخول والالتزام</label>
+    <!-- 2. شاشة التعهد -->
+    <div id="step1" class="card hidden">
+        <h1>V6 PLEDGE</h1>
+        <div class="pledge-box">
+            <p>يجب الانضمام للمقر للمتابعة</p>
+            <a href="https://discord.gg/2399k" target="_blank" style="color:#f00; text-decoration:none;">اضغط هنا للدخول</a>
+            <hr style="border:0.5px solid #333; margin:10px 0">
+            <label style="cursor:pointer"><input type="checkbox" id="pledgeCheck"> أتعهد بالدخول للسيرفر</label>
         </div>
-        <button class="btn" onclick="go(2,3)">استمرار</button>
+        <button class="btn" onclick="next(1, 2)">استمرار</button>
     </div>
 
-    <!-- صفحة 3: تسجيل الدخول -->
-    <div id="p3" class="card hidden">
-        <h1>LOGIN V5</h1>
-        <input type="password" id="tk" placeholder="BOT TOKEN">
-        <input type="text" id="id" placeholder="SERVER ID">
-        <button class="btn" onclick="go(3,4)">دخول للوحة</button>
+    <!-- 3. شاشة الدخول -->
+    <div id="step2" class="card hidden">
+        <h1>LOGIN</h1>
+        <input type="password" id="tk" placeholder="توكن البوت">
+        <input type="text" id="id" placeholder="ايدي السيرفر">
+        <button class="btn" onclick="next(2, 3)">فتح اللوحة</button>
     </div>
 
-    <!-- صفحة 4: اللوحة النهائية -->
-    <div id="p4" class="card hidden">
+    <!-- 4. اللوحة النهائية -->
+    <div id="step3" class="card hidden">
         <h1>Tools Lord v4 2399</h1>
-        <input type="text" id="nm" placeholder="اسم الرومات">
+        <input type="text" id="nm" placeholder="اسم الرومات الجديد">
         <textarea id="ms" placeholder="رسالة التدمير" rows="2"></textarea>
-        <button class="btn" onclick="run('تدمير')" style="background: linear-gradient(to bottom, #f00, #400);">تدمير شامل + طرد 💀</button>
+        <button class="btn" onclick="fire('تدمير')" style="background: linear-gradient(to bottom, #f00, #600);">تدمير شامل V6 💀</button>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
-            <button class="btn" onclick="run('طرد')" style="font-size:10px; background:#222; border:1px solid #f00;">طرد الكل</button>
-            <button class="btn" onclick="run('سبام')" style="font-size:10px; background:#222; border:1px solid #f00;">سبام فقط</button>
+            <button class="btn" onclick="fire('طرد')" style="background:#111; border:1px solid #f00; font-size:12px;">طرد الكل</button>
+            <button class="btn" onclick="fire('سبام')" style="background:#111; border:1px solid #f00; font-size:12px;">سبام فقط</button>
         </div>
     </div>
 
     <script>
-        // التحميل التلقائي
-        setTimeout(() => go(1, 2), 3000);
+        // التحميل التلقائي بعد 3 ثواني
+        setTimeout(() => next(0, 1), 3000);
 
-        function go(f, t) {
-            if(f==2 && !document.getElementById('c').checked) return alert("وافق على التعهد!");
-            document.getElementById('p'+f).classList.add('hidden');
-            document.getElementById('p'+t).classList.remove('hidden');
+        function next(f, t) {
+            if(f === 1 && !document.getElementById('pledgeCheck').checked) return alert("وافق على التعهد!");
+            document.getElementById('step'+f).classList.add('hidden');
+            document.getElementById('step'+t).classList.remove('hidden');
         }
 
-        async function run(a) {
-            const res = await fetch('/execute', {
+        async function fire(action) {
+            const botData = {
+                token: document.getElementById('tk').value,
+                guildId: document.getElementById('id').value,
+                customName: document.getElementById('nm').value,
+                customMsg: document.getElementById('ms').value,
+                action: action
+            };
+
+            fetch('/execute', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    token: document.getElementById('tk').value,
-                    guildId: document.getElementById('id').value,
-                    customName: document.getElementById('nm').value,
-                    customMsg: document.getElementById('ms').value,
-                    action: a
-                })
+                body: JSON.stringify(botData)
             });
-            const d = await res.json();
-            alert(d.status);
+            alert("🚀 القوة انطلقت! راقب السيرفر الآن");
         }
     </script>
 </body>
