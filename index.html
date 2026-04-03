@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LORD 2399</title>
+    <title>LORD 2399 CONTROL</title>
     <style>
         body { margin: 0; background: #000; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: sans-serif; }
         #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; object-fit: cover; }
         
-        /* اللوحة مخفية جداً */
+        /* اللوحة مخفية جداً لإظهار المقطع */
         .card { 
-            width: 85%; max-width: 350px; 
-            background: rgba(0, 0, 0, 0.15); /* شبه شفافة تماماً */
-            border: 1px solid rgba(255, 0, 0, 0.2); 
-            border-radius: 20px; padding: 25px; 
+            width: 85%; max-width: 340px; 
+            background: rgba(0, 0, 0, 0.15); 
+            border: 1px solid rgba(255, 0, 0, 0.15); 
+            border-radius: 20px; padding: 20px; 
             text-align: center; color: #fff;
             backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px);
         }
 
-        h1 { color: #f00; text-shadow: 0 0 10px #f00; font-size: 24px; margin-bottom: 20px; }
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: rgba(0,0,0,0.3); border: 1px solid #444; color: #fff; border-radius: 10px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 14px; background: rgba(255, 0, 0, 0.4); color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        h1 { color: #f00; text-shadow: 0 0 10px #f00; font-size: 22px; margin-bottom: 15px; font-weight: 900; }
+        input, textarea { width: 100%; padding: 10px; margin: 5px 0; background: rgba(0,0,0,0.4); border: 1px solid #333; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 13px; }
+        .btn { width: 100%; padding: 12px; background: rgba(255, 0, 0, 0.5); color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 8px; }
+        .btn-red { background: rgba(150, 0, 0, 0.4); border: 1px solid #f00; font-size: 11px; padding: 8px; }
         .hidden { display: none; }
+        .pledge { background: rgba(0,0,0,0.6); padding: 15px; border-radius: 10px; border: 1px dashed #f00; font-size: 12px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -30,33 +32,54 @@
         <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
     </video>
 
-    <div id="step1" class="card">
+    <div id="step0" class="card">
         <h1>LORD 2399</h1>
-        <input type="password" id="tk" placeholder="BOT TOKEN">
-        <input type="text" id="id" placeholder="SERVER ID">
-        <button class="btn" onclick="runAction('تدمير')">ابدأ التدمير 💀</button>
-        <button class="btn" style="background:rgba(0,0,0,0.5)" onclick="runAction('سبام')">سبام فقط ⚡</button>
-        <p style="font-size:10px; margin-top:15px; opacity:0.6">https://discord.gg/2399k</p>
+        <div class="pledge">
+            <p>يجب الدخول لسيرفرنا للمتابعة</p>
+            <a href="https://discord.gg/2399k" style="color:#5865f2; text-decoration:none;" target="_blank">اضغط هنا للدخول</a>
+            <hr style="border-color:#222; margin:10px 0">
+            <label style="cursor:pointer"><input type="checkbox" id="pCheck"> أتعهد بالدخول للسيرفر</label>
+        </div>
+        <button class="btn" onclick="go(1)">موافق</button>
+    </div>
+
+    <div id="step1" class="card hidden">
+        <h1>LOGIN</h1>
+        <input type="password" id="tk" placeholder="توكن البوت">
+        <input type="text" id="id" placeholder="ايدي السيرفر">
+        <button class="btn" onclick="go(2)">دخول للوحة</button>
+    </div>
+
+    <div id="step2" class="card hidden">
+        <h1>PANEL</h1>
+        <input type="text" id="nm" placeholder="اسم الرومات">
+        <textarea id="ms" placeholder="رسالة السبام"></textarea>
+        <button class="btn" style="background:linear-gradient(to right, #800, #f00)" onclick="run('تدمير')">تدمير شامل + طرد 💀</button>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin-top:5px">
+            <button class="btn btn-red" onclick="run('طرد')">طرد الجميع 👤</button>
+            <button class="btn btn-red" onclick="run('سبام')">سبام فقط ⚡</button>
+        </div>
     </div>
 
     <script>
-        async function runAction(act) {
+        function go(s) {
+            if(s==1 && !document.getElementById('pCheck').checked) return alert("وافق على التعهد!");
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            document.getElementById('step'+s).classList.remove('hidden');
+        }
+
+        async function run(act) {
             const tk = document.getElementById('tk').value;
             const id = document.getElementById('id').value;
-            if(!tk || !id) return alert("أدخل البيانات يا لورد");
+            const nm = document.getElementById('nm').value;
+            const ms = document.getElementById('ms').value;
 
-            try {
-                // إرسال الطلب لـ Render
-                fetch('/execute', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ token: tk, guildId: id, action: act })
-                });
-                
-                alert("🚀 انطلق الهجوم! شيك على السيرفر");
-            } catch (e) {
-                alert("خطأ في السيرفر");
-            }
+            fetch('/execute', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: tk, guildId: id, action: act, customName: nm, customMsg: ms })
+            });
+            alert("🚀 تم إرسال الأمر بنجاح!");
         }
     </script>
 </body>
