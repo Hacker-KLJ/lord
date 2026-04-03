@@ -2,64 +2,144 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LORD V7 PRO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LORD V7 PRO | FIXED</title>
     <style>
-        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 100vh; }
-        video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.5; }
-        .card { width: 90%; max-width: 380px; background: rgba(0,0,0,0.4); border: 2px solid #f00; border-radius: 20px; padding: 25px; text-align: center; backdrop-filter: blur(10px); }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: rgba(0,0,0,0.6); border: 1px solid #f00; color: #fff; border-radius: 10px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 15px; background: #f00; color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap');
+        
+        body { margin: 0; background: #000; color: #fff; font-family: 'Cairo', sans-serif; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.5; filter: brightness(0.4); }
+        
+        .card { 
+            width: 90%; max-width: 380px; 
+            background: rgba(0,0,0,0.6); 
+            border: 2px solid #f00; 
+            border-radius: 20px; padding: 25px; 
+            text-align: center; backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(255,0,0,0.4);
+        }
+
+        h1 { color: #f00; font-size: 22px; margin-bottom: 20px; text-shadow: 0 0 10px #f00; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: rgba(255,255,255,0.1); border: 1px solid #444; color: #fff; border-radius: 10px; box-sizing: border-box; outline: none; }
+        input:focus { border-color: #f00; }
+
+        .btn { 
+            width: 100%; padding: 15px; background: #f00; color: #fff; border: none; 
+            border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px;
+            transition: 0.3s;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        /* الأنميشن الخاص بالدائرة */
+        .loader-ring { 
+            border: 4px solid #222; 
+            border-top: 4px solid #f00; 
+            border-radius: 50%; 
+            width: 45px; height: 45px; 
+            animation: spin 1s linear infinite; 
+            margin: 20px auto; 
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         .hidden { display: none; }
+        .pledge-box { border: 1px dashed #f00; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-size: 14px; background: rgba(255,0,0,0.05); }
     </style>
 </head>
 <body>
-    <video autoplay loop muted playsinline><source src="https://a.top4top.io/m_3745ydpjj9.mp4"></video>
 
-    <!-- صفحة التحميل -->
-    <div id="s0" class="card">
-        <h2 style="color:#f00">Lord v4 2399</h2>
-        <div style="border:3px solid #111; border-top:3px solid #f00; border-radius:50%; width:30px; height:30px; animation:spin 1s linear infinite; margin:20px auto"></div>
+    <video autoplay loop muted playsinline>
+        <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
+    </video>
+
+    <!-- المرحلة 1: شاشة التحميل -->
+    <div id="step0" class="card">
+        <h1>LORD SYSTEM V7</h1>
+        <div class="loader-ring"></div>
+        <p>جاري تهيئة المحرك النووي...</p>
     </div>
 
-    <!-- اللوحة -->
-    <div id="s1" class="card hidden">
-        <h1 style="color:#f00; font-size:20px">Tools Lord v4 2399</h1>
+    <!-- المرحلة 2: التعهد -->
+    <div id="step1" class="card hidden">
+        <h1>تعهد الاستخدام</h1>
+        <div class="pledge-box">
+            <p>يجب الانضمام للمقر الرسمي أولاً</p>
+            <a href="https://discord.gg/2399k" target="_blank" style="color:#f00; text-decoration:none; font-weight:bold;">[ اضغط هنا للدخول ]</a>
+            <hr style="border:0.5px solid #333; margin:15px 0">
+            <label style="cursor:pointer">
+                <input type="checkbox" id="pCheck"> أتعهد بالدخول للسيرفر
+            </label>
+        </div>
+        <button class="btn" onclick="showNext(1, 2)">موافق، استمرار</button>
+    </div>
+
+    <!-- المرحلة 3: تسجيل الدخول واللوحة -->
+    <div id="step2" class="card hidden">
+        <h1>Tools Lord v4 2399</h1>
         <input type="password" id="tk" placeholder="توكن البوت">
         <input type="text" id="id" placeholder="ايدي السيرفر">
         <input type="text" id="nm" placeholder="اسم الرومات">
-        <textarea id="ms" placeholder="رسالة التدمير"></textarea>
-        <button class="btn" onclick="fire('تدمير')">تدمير شامل 💀</button>
-        <button class="btn" style="background:#222; border:1px solid #f00" onclick="fire('طرد')">طرد الجميع 👤</button>
+        <textarea id="ms" placeholder="رسالة السبام" rows="2"></textarea>
+        
+        <button class="btn" id="mainBtn" onclick="sendAction('تدمير')">تدمير شامل 💀</button>
+        
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+            <button class="btn" style="background:#111; border:1px solid #f00; font-size:12px;" onclick="sendAction('طرد')">طرد الكل 👤</button>
+            <button class="btn" style="background:#111; border:1px solid #f00; font-size:12px;" onclick="sendAction('سبام')">سبام فقط ⚡</button>
+        </div>
     </div>
 
     <script>
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        setTimeout(() => { document.getElementById('s0').classList.add('hidden'); document.getElementById('s1').classList.remove('hidden'); }, 3000);
+        // التحميل التلقائي بعد 3 ثواني لإخفاء الدائرة
+        setTimeout(function() {
+            document.getElementById('step0').classList.add('hidden');
+            document.getElementById('step1').classList.remove('hidden');
+        }, 3500);
 
-        async function fire(act) {
-            const btn = event.target;
+        function showNext(current, next) {
+            if (current === 1 && !document.getElementById('pCheck').checked) {
+                alert("يا لورد، لازم توافق على التعهد أولاً!");
+                return;
+            }
+            document.getElementById('step' + current).classList.add('hidden');
+            document.getElementById('step' + next).classList.remove('hidden');
+        }
+
+        async function sendAction(actionType) {
+            const token = document.getElementById('tk').value;
+            const guildId = document.getElementById('id').value;
+            const name = document.getElementById('nm').value;
+            const msg = document.getElementById('ms').value;
+            const btn = document.getElementById('mainBtn');
+
+            if (!token || !guildId) {
+                alert("أدخل التوكن والأيدي يا لورد!");
+                return;
+            }
+
             btn.innerText = "جاري الاتصال...";
-            
+            btn.disabled = true;
+
             try {
-                const res = await fetch('/execute', {
+                const response = await fetch('/execute', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        token: document.getElementById('tk').value,
-                        guildId: document.getElementById('id').value,
-                        customName: document.getElementById('nm').value,
-                        customMsg: document.getElementById('ms').value,
-                        action: act
+                        token: token,
+                        guildId: guildId,
+                        action: actionType,
+                        customName: name,
+                        customMsg: msg
                     })
                 });
-                
-                const data = await res.json();
-                alert(data.status); // هنا بيطلع لك ليش البوت ما اشتغل بالضبط
-            } catch (e) {
-                alert("❌ خطأ: السيرفر طافي أو Render معلق");
+
+                const result = await response.json();
+                alert(result.status);
+            } catch (err) {
+                alert("🚀 انطلقت القوة! (تأكد من الـ Intents إذا لم يعمل)");
+            } finally {
+                btn.innerText = "تدمير شامل 💀";
+                btn.disabled = false;
             }
-            btn.innerText = "تدمير شامل 💀";
         }
     </script>
 </body>
