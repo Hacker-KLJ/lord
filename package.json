@@ -1,16 +1,15 @@
 {
   "name": "lord-panel",
   "version": "1.0.0",
-  "description": "",
+  "description": "Lord 2399 Panel",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "discord.js": "^14.0.0",
-    "express": "^4.18.0",
-    "cors": "^2.8.5",
-    "body-parser": "^1.20.0"
+    "discord.js": "^14.14.1",
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5"
   }
 }
-
