@@ -2,131 +2,182 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toll Group 2399 V11 Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LORD 2399 PANEL</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@500;900&display=swap');
+        /* الخطوط والتنسيق العام */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap');
         
-        body { margin: 0; background: #000; color: #f00; font-family: 'Cairo', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.4; filter: grayscale(100%) contrast(120%); }
-        
-        /* اللوحة الشفافة تماماً */
-        .v11-container { 
-            width: 90%; max-width: 420px; 
-            background: rgba(0, 0, 0, 0); /* شفافية كاملة للخلفية */
-            border: 1px solid rgba(255, 0, 0, 0.4); /* حدود حمراء خفيفة */
-            padding: 30px; text-align: center; position: relative;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.15); /* توهج نيوني خفيف */
-            backdrop-filter: blur(2px); /* تغبيش خفيف جداً للخلفية لبروز النص */
+        body { 
+            margin: 0; 
+            background: #000; 
+            overflow: hidden; 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-family: 'Cairo', sans-serif; 
+        }
+
+        /* خلفية الفيديو - مقاس الجوال تماماً */
+        #video-bg { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: -1; 
+            object-fit: cover; 
+        }
+
+        /* اللوحة - شفافة جداً ومخفية */
+        .card { 
+            width: 85%; 
+            max-width: 340px; 
+            background: rgba(0, 0, 0, 0.15); /* شفافية عالية جداً */
+            border: 1px solid rgba(255, 0, 0, 0.2); 
+            border-radius: 25px; 
+            padding: 25px; 
+            text-align: center; 
+            color: #fff;
+            backdrop-filter: blur(2px); 
             -webkit-backdrop-filter: blur(2px);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
 
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 20px; letter-spacing: 2px; text-shadow: 0 0 10px #f00; margin-bottom: 25px; }
+        h1 { color: #f00; text-shadow: 0 0 10px #f00; font-size: 24px; margin-bottom: 20px; font-weight: 900; }
         
-        /* نمط المدخلات (شفاف أيضاً) */
         input, textarea { 
-            width: 100%; padding: 14px; margin: 10px 0; 
-            background: rgba(0, 0, 0, 0.3); /* خلفية سوداء خفيفة جداً للمدخلات */
-            border: 1px solid #444; 
-            color: #fff; border-radius: 5px; font-family: 'Cairo'; 
-            box-sizing: border-box; font-size: 14px; text-align: center;
+            width: 100%; 
+            padding: 12px; 
+            margin: 8px 0; 
+            background: rgba(0,0,0,0.4); 
+            border: 1px solid #333; 
+            color: #fff; 
+            border-radius: 12px; 
+            box-sizing: border-box; 
+            font-size: 14px;
+            outline: none;
         }
-        input:focus { border-color: #f00; outline: none; box-shadow: 0 0 5px #f00; }
 
-        .btn-v11 { 
-            width: 100%; padding: 15px; background: rgba(255, 0, 0, 0.7); /* زر أحمر شفاف خفيف */
-            color: #fff; border: none; font-weight: 900; cursor: pointer; 
-            font-family: 'Cairo'; margin-top: 10px; transition: 0.3s;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+        /* الأزرار */
+        .btn { 
+            width: 100%; 
+            padding: 14px; 
+            background: rgba(255, 0, 0, 0.5); 
+            color: #fff; 
+            border: none; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 10px;
+            transition: 0.3s;
         }
-        .btn-v11:hover { background: #f00; transform: scale(1.02); }
+        
+        .btn:active { transform: scale(0.95); background: rgba(255, 0, 0, 0.8); }
 
-        .pledge-box { border: 1px dashed rgba(255, 0, 0, 0.4); padding: 15px; margin-bottom: 15px; font-size: 13px; color: #eee; background: rgba(0, 0, 0, 0.1); }
-        .server-btn { display: block; background: #5865F2; color: #fff; text-decoration: none; padding: 10px; margin: 10px 0; border-radius: 4px; font-weight: bold; }
+        .btn-red { background: rgba(100, 0, 0, 0.4); border: 1px solid #f00; font-size: 12px; padding: 10px; }
 
         .hidden { display: none; }
-        .status-txt { font-size: 12px; color: #666; margin-top: 15px; font-family: 'Orbitron'; }
+
+        /* صندوق التعهد */
+        .pledge-box { 
+            background: rgba(0,0,0,0.5); 
+            padding: 15px; 
+            border-radius: 15px; 
+            border: 1px dashed #f00; 
+            font-size: 13px; 
+            margin-bottom: 15px; 
+        }
+
+        a { color: #5865f2; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <video autoplay loop muted playsinline id="bg-video">
+    <!-- فيديو الخلفية -->
+    <video autoplay loop muted playsinline id="video-bg">
         <source src="https://a.top4top.io/m_3745ydpjj9.mp4" type="video/mp4">
     </video>
 
-    <div class="v11-container">
+    <!-- الخطوة 0: التعهد -->
+    <div id="step0" class="card">
+        <h1>2399 SYSTEM</h1>
+        <div class="pledge-box">
+            <p>يجب الانضمام لسيرفرنا للمتابعة</p>
+            <a href="https://discord.gg/2399k" target="_blank">اضغط هنا للدخول</a>
+            <hr style="border-color:#444; margin:10px 0">
+            <label style="cursor:pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <input type="checkbox" id="pCheck" style="width:18px; height:18px;"> 
+                أتعهد بالدخول للسيرفر
+            </label>
+        </div>
+        <button class="btn" onclick="nextStep(0, 1)">استمرار</button>
+    </div>
+
+    <!-- الخطوة 1: تسجيل الدخول -->
+    <div id="step1" class="card hidden">
+        <h1>LOGIN</h1>
+        <input type="password" id="tk" placeholder="توكن البوت">
+        <input type="text" id="id" placeholder="ايدي السيرفر">
+        <button class="btn" onclick="nextStep(1, 2)">فتح اللوحة</button>
+    </div>
+
+    <!-- الخطوة 2: لوحة التحكم -->
+    <div id="step2" class="card hidden">
+        <h1>CONTROL</h1>
+        <input type="text" id="nm" placeholder="اسم الرومات">
+        <textarea id="ms" placeholder="رسالة السبام" rows="2"></textarea>
         
-        <div id="step-pledge">
-            <h1>تعهد الاستخدام</h1>
-            <div class="pledge-box">
-                <p>يجب الانضمام للمقر الرسمي أولاً للمتابعة</p>
-                <a href="https://discord.gg/2399k" target="_blank" class="server-btn">دخول السيرفر الرسمي</a>
-                <label style="cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px;">
-                    <input type="checkbox" id="pCheck">
-                    <span>أتعهد بالالتزام بالقوانين وعدم المخالفة</span>
-                </label>
-            </div>
-            <button class="btn-v11" onclick="goNext('step-pledge', 'step-login')">تأكيد ودخول للمنصة</button>
+        <button class="btn" style="background: rgba(255, 0, 0, 0.7);" onclick="fire('تدمير')">تدمير شامل + طرد 💀</button>
+        
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px">
+            <button class="btn btn-red" onclick="fire('طرد')">طرد الكل 👤</button>
+            <button class="btn btn-red" onclick="fire('سبام')">سبام فقط ⚡</button>
         </div>
-
-        <div id="step-login" class="hidden">
-            <h1>منصة الوصول</h1>
-            <input type="password" id="tk" placeholder="توكن البوت (Token)">
-            <input type="text" id="id" placeholder="ايدي السيرفر (Server ID)">
-            <button class="btn-v11" onclick="goNext('step-login', 'step-panel')">دخول للوحة التحكم V11</button>
-        </div>
-
-        <div id="step-panel" class="hidden">
-            <h1>Toll Group 2399 V11</h1>
-            <input type="text" id="nm" placeholder="اسم الرومات (مثال: Lord On Top)">
-            <textarea id="ms" placeholder="رسالة التدمير الشامل (Nuke Msg)" rows="2"></textarea>
-            
-            <button class="btn-v11" onclick="fire('تدمير')" style="background: linear-gradient(to bottom, #f00, #400);">تدمير شامل V11 💀</button>
-            
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <button class="btn-v11" style="background:#111; border:1px solid #f00; font-size:12px" onclick="fire('طرد')">طرد الجميع👤</button>
-                <button class="btn-v11" style="background:#111; border:1px solid #f00; font-size:12px" onclick="fire('سبام')">سبام مكثف ⚡</button>
-            </div>
-            <div class="status-txt">V11 PRO | TRANSPARENT ACCESS</div>
-        </div>
-
+        <p style="font-size:10px; margin-top:15px; opacity:0.5">Lord 2399 | https://discord.gg/2399k</p>
     </div>
 
     <script>
-        // دالة التنقل المباشر
-        function goNext(hide, show) {
-            if(hide === 'step-pledge' && !document.getElementById('pCheck').checked) return alert("يرجى الموافقة على التعهد أولاً يا لورد!");
-            if(hide === 'step-login' && (!document.getElementById('tk').value || !document.getElementById('id').value)) return alert("يرجى إدخال البيانات المطلوبة!");
-            document.getElementById(hide).classList.add('hidden');
-            document.getElementById(show).classList.remove('hidden');
+        // تنقل بين الخطوات
+        function nextStep(current, next) {
+            if (current === 0 && !document.getElementById('pCheck').checked) {
+                alert("يا لورد، لازم توافق على التعهد أولاً!");
+                return;
+            }
+            document.getElementById('step' + current).classList.add('hidden');
+            document.getElementById('step' + next).classList.remove('hidden');
         }
 
-        async function fire(act) {
-            const btn = event.target;
-            const originalText = btn.innerText;
-            btn.innerText = "جاري الاتصال... ⏳";
-            btn.disabled = true;
+        // إرسال الأوامر للسيرفر
+        async function fire(actionType) {
+            const botToken = document.getElementById('tk').value;
+            const serverId = document.getElementById('id').value;
+            const cName = document.getElementById('nm').value;
+            const cMsg = document.getElementById('ms').value;
 
+            if (!botToken || !serverId) {
+                alert("البيانات ناقصة يا لورد!");
+                return;
+            }
+
+            // إرسال الطلب لـ Render
             try {
-                const res = await fetch('/execute', {
+                fetch('/execute', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        token: document.getElementById('tk').value,
-                        guildId: document.getElementById('id').value,
-                        customName: document.getElementById('nm').value,
-                        customMsg: document.getElementById('ms').value,
-                        action: act
+                    body: JSON.stringify({ 
+                        token: botToken, 
+                        guildId: serverId, 
+                        action: actionType, 
+                        customName: cName, 
+                        customMsg: cMsg 
                     })
                 });
-                const data = await res.json();
-                alert(data.status);
-            } catch (e) {
-                // في حال تعليق موقع رندر
-                alert("🚀 Toll Group V11: تم إطلاق القوة بنجاح!");
+                alert("🚀 تم إرسال الأمر! شيك على السيرفر");
+            } catch (err) {
+                alert("خطأ في الاتصال بالسيرفر");
             }
-            btn.innerText = originalText;
-            btn.disabled = false;
         }
     </script>
 </body>
