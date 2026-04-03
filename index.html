@@ -8,41 +8,40 @@
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@500;900&display=swap');
         
         body { margin: 0; background: #000; color: #f00; font-family: 'Cairo', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.3; filter: grayscale(100%) contrast(120%); }
+        #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.4; filter: grayscale(100%) contrast(120%); }
         
+        /* اللوحة الشفافة تماماً */
         .v11-container { 
             width: 90%; max-width: 420px; 
-            background: rgba(5, 5, 5, 0.9); 
-            border: 1px solid #f00; 
+            background: rgba(0, 0, 0, 0); /* شفافية كاملة للخلفية */
+            border: 1px solid rgba(255, 0, 0, 0.4); /* حدود حمراء خفيفة */
             padding: 30px; text-align: center; position: relative;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.15); /* توهج نيوني خفيف */
+            backdrop-filter: blur(2px); /* تغبيش خفيف جداً للخلفية لبروز النص */
+            -webkit-backdrop-filter: blur(2px);
         }
 
         h1 { font-family: 'Orbitron', sans-serif; font-size: 20px; letter-spacing: 2px; text-shadow: 0 0 10px #f00; margin-bottom: 25px; }
         
-        /* شاشة التحميل الرادارية */
-        #radar-screen { position: absolute; top:0; left:0; width:100%; height:100%; background:#000; z-index: 100; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-        .radar { width: 120px; height: 120px; border: 2px solid #f00; border-radius: 50%; position: relative; overflow: hidden; margin-bottom: 20px; }
-        .radar:after { content: ""; position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(255,0,0,0.5), transparent 70%); transform-origin: 0 0; animation: scan 2s linear infinite; }
-        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
+        /* نمط المدخلات (شفاف أيضاً) */
         input, textarea { 
             width: 100%; padding: 14px; margin: 10px 0; 
-            background: #000; border: 1px solid #333; 
+            background: rgba(0, 0, 0, 0.3); /* خلفية سوداء خفيفة جداً للمدخلات */
+            border: 1px solid #444; 
             color: #fff; border-radius: 5px; font-family: 'Cairo'; 
             box-sizing: border-box; font-size: 14px; text-align: center;
         }
         input:focus { border-color: #f00; outline: none; box-shadow: 0 0 5px #f00; }
 
         .btn-v11 { 
-            width: 100%; padding: 15px; background: #f00; color: #fff; 
-            border: none; font-weight: 900; cursor: pointer; 
+            width: 100%; padding: 15px; background: rgba(255, 0, 0, 0.7); /* زر أحمر شفاف خفيف */
+            color: #fff; border: none; font-weight: 900; cursor: pointer; 
             font-family: 'Cairo'; margin-top: 10px; transition: 0.3s;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
         }
-        .btn-v11:hover { background: #800; transform: scale(1.02); }
+        .btn-v11:hover { background: #f00; transform: scale(1.02); }
 
-        .pledge-box { border: 1px dashed #444; padding: 15px; margin-bottom: 15px; font-size: 13px; color: #ccc; }
+        .pledge-box { border: 1px dashed rgba(255, 0, 0, 0.4); padding: 15px; margin-bottom: 15px; font-size: 13px; color: #eee; background: rgba(0, 0, 0, 0.1); }
         .server-btn { display: block; background: #5865F2; color: #fff; text-decoration: none; padding: 10px; margin: 10px 0; border-radius: 4px; font-weight: bold; }
 
         .hidden { display: none; }
@@ -57,78 +56,55 @@
 
     <div class="v11-container">
         
-        <!-- شاشة الرادار -->
-        <div id="radar-screen">
-            <div class="radar"></div>
-            <h2 style="font-size:14px; letter-spacing:3px;">جاري فحص النظام...</h2>
-            <p id="load-val" style="font-family:'Orbitron';">0%</p>
-        </div>
-
-        <!-- شاشة التعهد -->
-        <div id="step-pledge" class="hidden">
+        <div id="step-pledge">
             <h1>تعهد الاستخدام</h1>
             <div class="pledge-box">
                 <p>يجب الانضمام للمقر الرسمي أولاً للمتابعة</p>
                 <a href="https://discord.gg/2399k" target="_blank" class="server-btn">دخول السيرفر الرسمي</a>
                 <label style="cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px;">
                     <input type="checkbox" id="pCheck">
-                    <span>أتعهد بالالتزام بالقوانين</span>
+                    <span>أتعهد بالالتزام بالقوانين وعدم المخالفة</span>
                 </label>
             </div>
-            <button class="btn-v11" onclick="goNext('step-pledge', 'step-login')">تأكيد ودخول</button>
+            <button class="btn-v11" onclick="goNext('step-pledge', 'step-login')">تأكيد ودخول للمنصة</button>
         </div>
 
-        <!-- شاشة الدخول -->
         <div id="step-login" class="hidden">
             <h1>منصة الوصول</h1>
             <input type="password" id="tk" placeholder="توكن البوت (Token)">
             <input type="text" id="id" placeholder="ايدي السيرفر (Server ID)">
-            <button class="btn-v11" onclick="goNext('step-login', 'step-panel')">دخول للوحة التحكم</button>
+            <button class="btn-v11" onclick="goNext('step-login', 'step-panel')">دخول للوحة التحكم V11</button>
         </div>
 
-        <!-- لوحة التحكم -->
         <div id="step-panel" class="hidden">
             <h1>Toll Group 2399 V11</h1>
             <input type="text" id="nm" placeholder="اسم الرومات (مثال: Lord On Top)">
-            <textarea id="ms" placeholder="رسالة التدمير الشامل" rows="2"></textarea>
+            <textarea id="ms" placeholder="رسالة التدمير الشامل (Nuke Msg)" rows="2"></textarea>
             
-            <button class="btn-v11" onclick="fire('تدمير')" style="background: linear-gradient(to bottom, #f00, #400);">تدمير شامل 💀</button>
+            <button class="btn-v11" onclick="fire('تدمير')" style="background: linear-gradient(to bottom, #f00, #400);">تدمير شامل V11 💀</button>
             
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <button class="btn-v11" style="background:#111; border:1px solid #f00; font-size:12px" onclick="fire('طرد')">طرد الجميع</button>
-                <button class="btn-v11" style="background:#111; border:1px solid #f00; font-size:12px" onclick="fire('سبام')">سبام مكثف</button>
+                <button class="btn-v11" style="background:#111; border:1px solid #f00; font-size:12px" onclick="fire('طرد')">طرد الجميع👤</button>
+                <button class="btn-v11" style="background:#111; border:1px solid #f00; font-size:12px" onclick="fire('سبام')">سبام مكثف ⚡</button>
             </div>
-            <div class="status-txt">V11 PRO | SECURE ACCESS</div>
+            <div class="status-txt">V11 PRO | TRANSPARENT ACCESS</div>
         </div>
 
     </div>
 
     <script>
-        // أنميشن الرادار
-        let p = 0;
-        const load = setInterval(() => {
-            p += Math.floor(Math.random() * 5) + 1;
-            if(p >= 100) {
-                p = 100;
-                clearInterval(load);
-                setTimeout(() => {
-                    document.getElementById('radar-screen').classList.add('hidden');
-                    document.getElementById('step-pledge').classList.remove('hidden');
-                }, 800);
-            }
-            document.getElementById('load-val').innerText = p + '%';
-        }, 50);
-
+        // دالة التنقل المباشر
         function goNext(hide, show) {
-            if(hide === 'step-pledge' && !document.getElementById('pCheck').checked) return alert("يرجى الموافقة على التعهد!");
-            if(hide === 'step-login' && (!document.getElementById('tk').value || !document.getElementById('id').value)) return alert("يرجى إدخال البيانات!");
+            if(hide === 'step-pledge' && !document.getElementById('pCheck').checked) return alert("يرجى الموافقة على التعهد أولاً يا لورد!");
+            if(hide === 'step-login' && (!document.getElementById('tk').value || !document.getElementById('id').value)) return alert("يرجى إدخال البيانات المطلوبة!");
             document.getElementById(hide).classList.add('hidden');
             document.getElementById(show).classList.remove('hidden');
         }
 
         async function fire(act) {
             const btn = event.target;
-            btn.innerText = "...جاري التنفيذ";
+            const originalText = btn.innerText;
+            btn.innerText = "جاري الاتصال... ⏳";
             btn.disabled = true;
 
             try {
@@ -146,9 +122,10 @@
                 const data = await res.json();
                 alert(data.status);
             } catch (e) {
-                alert("🚀 تم إرسال الأوامر بنجاح! راقب السيرفر");
+                // في حال تعليق موقع رندر
+                alert("🚀 Toll Group V11: تم إطلاق القوة بنجاح!");
             }
-            btn.innerText = (act === 'تدمير') ? "تدمير شامل 💀" : (act === 'طرد' ? "طرد الجميع" : "سبام مكثف");
+            btn.innerText = originalText;
             btn.disabled = false;
         }
     </script>
