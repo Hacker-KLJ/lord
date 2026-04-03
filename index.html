@@ -3,52 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LORD 2399 Tools</title>
+    <title>LORD 2399 Group</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@600;900&display=swap');
-        body { margin: 0; background: #000; color: #fff; font-family: 'Cairo', sans-serif; overflow-x: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .card { width: 90%; max-width: 380px; background: rgba(15,0,0,0.95); border: 1px solid #f00; border-radius: 15px; padding: 20px; box-shadow: 0 0 25px #f00; text-align: center; }
+        
+        body { margin: 0; background: #000; color: #fff; font-family: 'Cairo', sans-serif; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        
+        /* فيديو الخلفية المتحركة */
+        #video-bg {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -2;
+            object-fit: cover;
+            filter: brightness(0.4); /* تعتيم الفيديو لبروز اللوحة */
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .card { width: 90%; max-width: 380px; background: rgba(15,0,0,0.85); border: 2px solid #f00; border-radius: 15px; padding: 20px; box-shadow: 0 0 30px #f00; text-align: center; backdrop-filter: blur(5px); }
         h1 { font-family: 'Orbitron'; color: #f00; text-shadow: 0 0 10px #f00; margin-bottom: 20px; }
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #0a0a0a; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: rgba(0,0,0,0.7); border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
         .btn { width: 100%; padding: 15px; background: #f00; color: #fff; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 10px; }
         .btn-small { background: #111; border: 1px solid #f00; padding: 10px; font-size: 12px; color: white; border-radius: 8px; transition: 0.3s; }
         .btn-small:active { background: #f00; }
         .hidden { display: none; }
         .link { color: #5865f2; text-decoration: none; font-weight: bold; display: block; margin: 10px; }
-        .pledge-box { background: #0a0a0a; padding: 15px; border-radius: 10px; border: 1px dashed #f00; font-size: 13px; margin-bottom: 15px; }
+        .pledge-box { background: rgba(0,0,0,0.6); padding: 15px; border-radius: 10px; border: 1px dashed #f00; font-size: 13px; margin-bottom: 15px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-        .footer-info { font-size: 11px; color: #666; margin-top: 20px; font-family: 'Orbitron'; }
+        .footer-info { font-size: 11px; color: #aaa; margin-top: 20px; font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
 
-    <!-- التعهد -->
+    <iframe id="video-bg" 
+        src="https://www.youtube.com/embed/TDMnL-GtAvk?autoplay=1&mute=1&controls=0&loop=1&playlist=TDMnL-GtAvk&showinfo=0&rel=0&iv_load_policy=3" 
+        frameborder="0" allow="autoplay; encrypted-media">
+    </iframe>
+    <div class="overlay"></div>
+
     <div id="step0" class="card">
-        <h1>2399 SYSTEM</h1>
+        <h1>2399 SYSTEM V3 ☠️</h1>
         <div class="pledge-box">
             <p>ادخل سيرفر ديسكورد الرسمي للمتابعة</p>
             <a href="https://discord.gg/2399k" class="link" target="_blank">رابط السيرفر اضغط هنا</a>
-            <hr style="border-color:#222">
-            <label style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+            <hr style="border-color:#444">
+            <label style="display: flex; align-items: center; gap: 10px; margin-top: 10px; cursor: pointer;">
                 <input type="checkbox" id="pledgeCheck" style="width: 18px; height: 18px;">
                 <span>أتعهد بالدخول وأبرئ ذمة Lord 2399</span>
             </label>
         </div>
         <button class="btn" onclick="goToLogin()">الموافقة والدخول</button>
+        <div class="footer-info">DESIGNED BY LORD 2399</div>
     </div>
 
-    <!-- تسجيل الدخول -->
     <div id="step1" class="card hidden">
-        <h1>Tools v2 2399 ☠️</h1>
+        <h1>Tools SYSTEM 2399 V3</h1>
         <input type="password" id="tk" placeholder="BOT TOKEN">
         <input type="text" id="id" placeholder="SERVER ID">
         <button class="btn" onclick="goToPanel()">Login</button>
     </div>
 
-    <!-- لوحة التحكم الكاملة -->
     <div id="step2" class="card hidden" style="max-height: 92vh; overflow-y: auto;">
         <h1>LORD CONTROL</h1>
-        
         <div style="text-align: right; font-size: 11px; color: #f00;">إعدادات الأسماء:</div>
         <input type="text" id="customName" placeholder="اسم الرومات المخصص">
         <div class="grid">
@@ -63,7 +90,7 @@
         <div style="text-align: right; font-size: 11px; color: #f00; margin-top: 15px;">إجراءات الأعضاء:</div>
         <button class="btn-small" style="width:100%; background: #200;" onclick="run('طرد الجميع')">طرد جميع الأعضاء 👤</button>
 
-        <hr style="border: 0.5px solid #333; margin: 15px 0;">
+        <hr style="border: 0.5px solid #444; margin: 15px 0;">
         <button class="btn" style="background: linear-gradient(90deg, #800, #f00); height: 55px; font-size: 18px;" onclick="run('ابدأ')">ابدأ التدمير الشامل 💀</button>
         
         <div class="footer-info">
